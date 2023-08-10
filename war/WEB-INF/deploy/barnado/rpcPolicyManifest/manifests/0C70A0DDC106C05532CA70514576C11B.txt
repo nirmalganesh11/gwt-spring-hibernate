@@ -1,0 +1,2 @@
+serviceClass: silva.client.AppService
+path: 49F383CB0D6C8444820C2846F1B6CD84.gwt.rpc
