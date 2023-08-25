@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="proj.shared.Employee" table="employees">
+        <id name="id" column="id">
+            <generator class="native" />
+        </id>
+        <property name="name" column="fullname" />
+        <property name="designation" column="designation" />
+        <property name="salary" column="salary" />
+        <property name="username" column ="username" />
+        <property name="password" column="password" />
+    </class>
+</hibernate-mapping>

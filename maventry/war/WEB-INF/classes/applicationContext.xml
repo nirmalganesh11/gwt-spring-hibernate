@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:simple="http://cxf.apache.org/simple" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+                           
+                           
+       
+                           
+                           
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    	<property name="driverClassName" value="org.postgresql.Driver" />
+    	<property name="url" value="jdbc:postgresql://localhost:5432/sampledb" />
+    	<property name="username" value="nirmalganesh11" />
+   		<property name="password" value="celkonganesh" />
+
+    	<!-- Connection Pool Settings -->
+    	<property name="initialSize" value="5" />
+    	<property name="maxTotal" value="20" />
+    	<property name="maxIdle" value="10" />
+    	<property name="minIdle" value="5" />
+    	<property name="validationQuery" value="SELECT 1" />
+    	<property name="testOnBorrow" value="true" />
+	</bean>
+    
+    
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mappingResources">
+			<list>
+				<value>Employee.hbm.xml</value>
+      			<value>User.hbm.xml</value>
+       			<value>designation.hbm.xml </value>
+       			<value>salary.hbm.xml </value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="employeeDAO" class="proj.server.daopack.EmployeeDAO">
+		  <constructor-arg ref="sessionFactory" />
+	</bean>
+	<bean id="employeeService" class="proj.server.servicepack.EmployeeService">
+		<constructor-arg ref="employeeDAO" />
+	</bean>
+	<bean id="salaryDAO" class="proj.server.daopack.SalaryDAO">
+		  <constructor-arg ref="sessionFactory" />
+	</bean>
+	<bean id="salaryService" class="proj.server.servicepack.SalaryService">
+		<constructor-arg ref="salaryDAO" />
+	</bean>
+	
+	<bean id="desigDAO" class="proj.server.daopack.DesigDAO">
+		  <constructor-arg ref="sessionFactory" />
+	</bean>
+	<bean id="desigService" class="proj.server.servicepack.DesigService">
+		<constructor-arg ref="desigDAO" />
+	</bean>
+	
+	<bean id="userDAO" class="proj.server.daopack.UserDAO">
+		  <constructor-arg ref="sessionFactory" />
+	</bean>
+	<bean id="userService" class="proj.server.servicepack.UserService">
+		<constructor-arg ref="userDAO" />
+	</bean>
+	 
+	
+	
+	
+	
+	
+	
+</beans>

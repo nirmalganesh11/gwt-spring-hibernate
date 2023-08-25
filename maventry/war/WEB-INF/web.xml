@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+
+     <servlet>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>proj.server.EmployeeServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/maventry/emp</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>DesigServlet</servlet-name>
+    <servlet-class>proj.server.DesigServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>DesigServlet</servlet-name>
+    <url-pattern>/maventry/desig</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>proj.server.UserServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/maventry/user</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>SalaryServlet</servlet-name>
+    <servlet-class>proj.server.SalaryClassServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>SalaryServlet</servlet-name>
+    <url-pattern>/maventry/salary</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>proj.server.AuthenticationServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/maventry/authenticationService</url-pattern>
+  </servlet-mapping>
+  
+
+	<!-- web.xml -->
+<filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml
+               classpath:security-config.xml
+    </param-value>
+</context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+ <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+</listener>
+
+  
+    <session-config>
+        <session-timeout>1</session-timeout> <!-- Session timeout in minutes -->
+    </session-config>
+
+  <welcome-file-list>
+    <welcome-file>Maventry.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
