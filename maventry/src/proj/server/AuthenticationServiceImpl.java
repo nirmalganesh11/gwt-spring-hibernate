@@ -1,6 +1,10 @@
 package proj.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import proj.client.servicesClient.AuthenticationService;
-import proj.server.security.CustomAuthenticationProvider;
+import proj.server.security.DaoProvider;
 
 public class AuthenticationServiceImpl extends RemoteServiceServlet implements AuthenticationService {
 
@@ -18,7 +22,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 	private AuthenticationProvider authenticationProvider;
 
 	public AuthenticationServiceImpl() {
-	   this.authenticationProvider = new CustomAuthenticationProvider();
+	   //this.authenticationProvider = new CustomAuthenticationProvider();
 	}
 	
     public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
@@ -26,24 +30,40 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     }
 
     @Override
-    public boolean authenticate(String username, String password) {
-        
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
-        try {
-            
-            Authentication result = authenticationProvider.authenticate(authentication);
-           
-            SecurityContextHolder.getContext().setAuthentication(result);
-
-            return result.isAuthenticated();
-            
-        } catch (AuthenticationException e) {
-            
-            return false;
-        }
+    public boolean authenticate(String encodedString) {
+    	String username ="";
+    	String password ="";
+    	String decodedCreds = decode(encodedString);
+    	  String[] credentials = decodedCreds.split(":");
+          if (credentials.length == 2) {
+              username = credentials[0];
+              password = credentials[1];
+          } else {
+              System.out.println("Invalid credentials format");
+          }
+          System.out.println(username +"------------"+password);
+          
+        Authentication auth = new UsernamePasswordAuthenticationToken(username,password);
+        DaoProvider doap = new DaoProvider();
+        Authentication authbro = doap.authenticate(auth);
+        //System.out.println(authbro.isAuthenticated());
+  		//Authentication doneUser = authenticationProvider.authenticate(auth);
+  		//SecurityContextHolder.getContext().setAuthentication(doneUser);
+        if(authbro !=null)
+        	return authbro.isAuthenticated();
+        else
+        	return false;
     }
 	
-    
+	private String decode(String encodedCredentials) {
+	    try {
+	        byte[] decodedBytes = Base64.getDecoder().decode(encodedCredentials);
+	        return new String(decodedBytes, StandardCharsets.UTF_8);
+	    } catch (IllegalArgumentException e) {
+	        // Handle decoding errors
+	        return null;
+	    }
+	}
 	
 
 	@Override

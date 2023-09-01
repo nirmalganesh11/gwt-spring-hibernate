@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.DesigServiceClient
+path: 0F26C9A0AA00D6E1D363B1E4921EAB8A.gwt.rpc

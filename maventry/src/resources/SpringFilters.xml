@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+   			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	
+	<bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+	    <constructor-arg>
+	        <list>
+	            <bean  class="org.springframework.security.access.vote.AuthenticatedVoter" />
+	            <bean class="org.springframework.security.access.vote.RoleVoter" />
+	            <bean class="org.springframework.security.web.access.expression.WebExpressionVoter" />
+	        </list>
+	    </constructor-arg>
+	</bean>
+	
+	
+	<bean id="exceptionTranslationFilter"
+    	class="org.springframework.security.web.access.ExceptionTranslationFilter">
+    	<constructor-arg>
+       	 	<ref bean="authenticationEntryPoint" />
+    	</constructor-arg>
+    	<property name="accessDeniedHandler">
+      		<bean class="proj.server.security.filters.NirmalAccessDeniedHandler" />
+    	</property>
+  </bean>
+	
+	<bean id="securityContextPersistenceFilter"
+    	class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+		<constructor-arg>
+		    <ref bean="securityContextRepository"/>
+		</constructor-arg>
+	</bean>
+	<bean id="securityContextRepository"
+		class="org.springframework.security.web.context.HttpSessionSecurityContextRepository">
+		<property name="allowSessionCreation" value="true" />
+	</bean>
+	
+	<bean id="usernamePasswordAuthenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="filterProcessesUrl" value="/j_spring_security_check" />
+	</bean>
+	
+
+	<bean id="basicAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
+		<property name="realmName" value="nirmal-security" />
+	</bean>
+
+  
+	<bean id="anonymousAuthenticationFilter"
+		class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+		<constructor-arg type="java.lang.String" value="foobar">
+		</constructor-arg>
+	</bean>
+	
+	
+	<bean id="securityContextHolderAwareRequestFilter"
+		class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />
+
+	
+	
+		
+	<bean id="httpFirewall"
+      class="org.springframework.security.web.firewall.StrictHttpFirewall">
+      <property name="allowSemicolon" value="true"/>
+	</bean>
+	
+	
+	<bean id="anonymousAuthenticationProvider"
+    	class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+    		<constructor-arg type="java.lang.String" value="foobar">
+   		 		</constructor-arg>
+   	 </bean>
+	
+</beans>
+
+
+
+

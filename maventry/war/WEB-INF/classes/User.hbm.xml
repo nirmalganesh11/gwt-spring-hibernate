@@ -8,6 +8,6 @@
         </id>
         <property name="username" column ="username" />
         <property name="password" column="password" />
-         <property name="designation" column="designation" />
+        <property name="rolesArray" column="string_array_column" type="proj.shared.StringArrayUserType" />
     </class>
 </hibernate-mapping>

@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.AuthenticationService
+path: DFB51AF73F46C8C2F0CA3F1E0C85F16E.gwt.rpc

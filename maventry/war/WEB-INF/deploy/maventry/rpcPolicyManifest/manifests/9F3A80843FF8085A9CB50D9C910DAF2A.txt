@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.EmployeeServiceClient
+path: 1BC590AEAFCEDEC623DA0A0E69C007BA.gwt.rpc

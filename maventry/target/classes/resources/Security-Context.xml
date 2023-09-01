@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+   			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	
+	<bean id="basicAuthenticationFilter"
+		class="proj.server.security.filters.BasicAuthStandAloneFilter">
+		
+	    <constructor-arg>
+		    <ref bean="authenticationManager" />
+		</constructor-arg>
+		<constructor-arg>
+		   <ref bean="basicAuthenticationEntryPoint" />
+		</constructor-arg>
+		
+		<property name="userService" ref="userService"/>  
+		<property name="loginServiceDelegate" ref="loginServiceDelegate" />
+		<property name="loginService" ref="loginService"/>
+		<property name="authenticationService" ref="authenticationService"/>
+
+	</bean>
+	
+	<bean id="authenticationService"
+		class="proj.server.security.AuthenticatorStandAlone">
+		<property name="userService" ref="userService" />
+		<property name="loginServiceDelegate" ref="loginServiceDelegate" />
+	</bean>
+	
+	 <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+      	<constructor-arg>
+          <list>
+        	<ref bean="daoprovider" />
+        	<ref bean="anonymousAuthenticationProvider" />
+      	  </list>
+      	</constructor-arg>
+  	</bean>
+	
+	<bean id="filterInvocationInterceptor"
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="accessDecisionManager">
+			<ref bean="httpRequestAccessDecisionManager" />
+		</property>
+		
+		<property name="securityMetadataSource">
+		    <security:filter-security-metadata-source request-matcher="ant" use-expressions="false">
+		    	<security:intercept-url pattern="/maventry/desig" access="IS_AUTHENTICATED_FULLY"/>
+		    	<security:intercept-url pattern="/maventry/emp" access="IS_AUTHENTICATED_FULLY"/>
+		    	<security:intercept-url pattern="/maventry/salary" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		    	<security:intercept-url pattern="/maventry/user" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		        <security:intercept-url pattern="/maventry/authenticationService" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		        <security:intercept-url pattern="/maventry/services/**" access="IS_AUTHENTICATED_FULLY"/>
+		        <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		    </security:filter-security-metadata-source>
+		</property>
+	</bean>
+
+
+</beans>
+
+
+
+

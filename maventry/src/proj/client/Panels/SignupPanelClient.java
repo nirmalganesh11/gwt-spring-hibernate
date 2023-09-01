@@ -27,7 +27,7 @@ import proj.shared.User;
 
 public class SignupPanelClient {
 
-    private final DesigServiceClientAsync desigserv = GWT.create(DesigServiceClient.class);
+    //private final DesigServiceClientAsync desigserv = GWT.create(DesigServiceClient.class);
     private final UserServiceClientAsync userserv = GWT.create(UserServiceClient.class);
     private final LoginPanelClient lg = new LoginPanelClient();
 	private final DashBoardPanelClient dbp = new DashBoardPanelClient();
@@ -37,8 +37,11 @@ public class SignupPanelClient {
 	private final VerticalPanel panel = new VerticalPanel();
     private final TextBox newUsernameTextBox = new TextBox();
     private final TextBox newPasswordTextBox = new TextBox();
+    private final TextBox inputRoles = new TextBox();
     private final ListBox desigDropdown = new ListBox();
     private final Label checkUsernameLabel = new Label();
+    
+    String array[] = {};
     
 	public VerticalPanel createSignupPanel() {
 		
@@ -55,31 +58,33 @@ public class SignupPanelClient {
        
         
         //keeping the default role when no changes are made
-        newUser.setDesignation("Ceo");
+		array[0] ="ceo";
+        newUser.setRolesArray(array);
         desigDropdown.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				int selectedIndex = desigDropdown.getSelectedIndex();
 				String desigValue = desigDropdown.getValue(selectedIndex);
-				newUser.setDesignation(desigValue);
+				array[0] = desigValue;
+				newUser.setRolesArray(array);
 			}
         });
         
         
-        desigserv.getDesignations(new AsyncCallback<List<String>>(){
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert(caught.toString());
-			}
-
-			@Override
-			public void onSuccess(List<String> result) {
-				for (String designame : result){
-			            desigDropdown.addItem(designame);
-			    }
-				//Window.alert("added few fields in desigdrowdown");
-			}
-        });
+//        desigserv.getDesignations(new AsyncCallback<List<String>>(){
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				Window.alert(caught.toString());
+//			}
+//
+//			@Override
+//			public void onSuccess(List<String> result) {
+//				for (String designame : result){
+//			            desigDropdown.addItem(designame);
+//			    }
+//				//Window.alert("added few fields in desigdrowdown");
+//			}
+//        });
         
 //        eventBus.addHandler(ButtonClickEvent.TYPE, new ButtonClickEventHandler() {
 //     			@Override
@@ -139,6 +144,8 @@ public class SignupPanelClient {
 				if(!newUsernameTextBox.getText().equalsIgnoreCase("") && !newPasswordTextBox.getText().equalsIgnoreCase("")) {
 					newUser.setUsername(newUsernameTextBox.getText());
 					newUser.setPassword(newPasswordTextBox.getText());
+					String arr[] = inputRoles.getText().split(" ");
+					newUser.setRolesArray(arr);
 					userserv.signUpAuth(newUser, new AsyncCallback<String>() {
 						@Override
 						public void onFailure(Throwable caught) {
@@ -180,8 +187,10 @@ public class SignupPanelClient {
         panel.add(usernameCheckButton);
         panel.add(new Label("New Password:"));
         panel.add(newPasswordTextBox);
-        panel.add(new Label("Choose designation"));
-        panel.add(desigDropdown);
+        panel.add(new Label("Input roles With space"));
+        panel.add(inputRoles);
+       // panel.add(new Label("Choose designation"));
+       // panel.add(desigDropdown);
         panel.add(signUpButton);
         panel.add(loginLink);
         hq.add(panel);

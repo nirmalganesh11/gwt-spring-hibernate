@@ -77,7 +77,7 @@
 	<bean id="userDAO" class="proj.server.daopack.UserDAO">
 		  <constructor-arg ref="sessionFactory" />
 	</bean>
-	<bean id="userService" class="proj.server.servicepack.UserService">
+	<bean id="userServiceData" class="proj.server.servicepack.UserService">
 		<constructor-arg ref="userDAO" />
 	</bean>
 	 

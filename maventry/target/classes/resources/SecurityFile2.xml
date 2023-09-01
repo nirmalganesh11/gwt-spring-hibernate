@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:simple="http://cxf.apache.org/simple" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+                           
+
+	<bean id="daoprovider"
+		class="proj.server.security.DaoProvider" scope="prototype">
+		<property name="passwordEncoder" ref="encoder"/>
+		<property name="userDetailsService" ref="loginService" />
+	</bean>
+	
+	
+	<bean id="encoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method="getInstance"/>
+	
+
+	<bean id="loginService" class="proj.server.security.LoginServiceBoy"> </bean>
+  		
+  	<bean id="userService"
+		class="proj.server.security.UserServiceImpl">
+	</bean>
+	
+	<bean id="loginServiceDelegate" class="proj.server.security.LoginServiceDelegateImpl">
+		
+	</bean>
+		<bean id="authenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<constructor-arg value="/login.html">
+		</constructor-arg>
+		<!-- <property name="loginFormUrl" value="/login.html" /> -->
+		<property name="forceHttps" value="false" />
+	</bean>
+	
+	
+	
+</beans>

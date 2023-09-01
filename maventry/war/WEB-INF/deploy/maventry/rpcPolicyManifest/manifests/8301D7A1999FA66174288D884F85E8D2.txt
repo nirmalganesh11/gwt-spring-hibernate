@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.SalaryClassServiceClient
+path: B840E14EE833E02C8B20225C4AFEF776.gwt.rpc

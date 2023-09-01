@@ -1,7 +1,7 @@
 package proj.client.Panels;
 
+//import com.google.gwt.user.server.Base64Utils;
 import com.google.gwt.core.client.GWT;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -12,16 +12,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import proj.client.servicesClient.UserServiceClient;
-import proj.client.servicesClient.UserServiceClientAsync;
+
 import proj.client.servicesClient.AuthenticationService;
 import proj.client.servicesClient.AuthenticationServiceAsync;
 import proj.shared.User;
-
+//import java.util.Base64;
 
 public class LoginPanelClient {
 
-   UserServiceClientAsync userserv;
    AuthenticationServiceAsync authserv;
    User oblog;
    TextBox usernameTextBox;
@@ -36,7 +34,6 @@ public class LoginPanelClient {
    
    public VerticalPanel createLoginPanel() {
 		 	oblog = new User();
-		 	userserv = GWT.create(UserServiceClient.class);
 		 	authserv = GWT.create(AuthenticationService.class);
 		 	
 		 	su = new SignupPanelClient();
@@ -51,7 +48,7 @@ public class LoginPanelClient {
 	        
 	        
 	        Button loginButton = new Button("Login");
-	        Button signUpLink = new Button("Don't have an account? Nirmal build7 Sign Up!");
+	        Button signUpLink = new Button("Don't have an account? Nirmal build8 Sign Up!");
 	        
 	        loginButton.addClickHandler(new ClickHandler() {
 				@Override
@@ -77,7 +74,11 @@ public class LoginPanelClient {
 //					});
 					username = usernameTextBox.getText();
 					password = passwordTextBox.getText();
-					authserv.authenticate(username, password, new AsyncCallback<Boolean>() {
+					String credentials = username + ":" + password;
+					String encoded = encodeBase64(credentials);
+					//String encoded = encodeCredentials(username,password);
+					
+					authserv.authenticate(encoded, new AsyncCallback<Boolean>() {
 						@Override
 						public void onFailure(Throwable caught) {
 							Window.alert(caught.toString());
@@ -129,4 +130,17 @@ public class LoginPanelClient {
 	        
 	        return whole;
 	    }
+   
+   private String encodeCredentials(String username, String password) {
+       String credentials = username + ":" + password;
+       //String encodedCredentials = Base64.getEncoder().encodeToString(credentials.getBytes());
+      // return encodedCredentials;
+       return "";
+   }
+   private native String encodeBase64(String input) /*-{
+   return btoa(input);
+	}-*/;
+
+   
+   
 }
