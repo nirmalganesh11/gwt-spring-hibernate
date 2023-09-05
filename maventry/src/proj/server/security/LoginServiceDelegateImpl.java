@@ -1,5 +1,7 @@
 package proj.server.security;
 
+import proj.server.security.securityClasses.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +12,10 @@ import proj.server.security.securityClasses.UserAccount;
 import proj.server.servicepack.IUserService;
 import proj.shared.User;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class LoginServiceDelegateImpl {
 	
 	private IUserService userServiceDao;
@@ -19,6 +25,20 @@ public class LoginServiceDelegateImpl {
 		
 	}
 	
+	public void authenticate(Credential cred) {
+		String username  = cred.getUsername();
+		String password = cred.getPassword();
+		UserAccount authuser = getUserDataFromDb(username);
+		if(authuser != null  && authuser.getPassword().equals(password)) {
+			Authentication doneauth = new UsernamePasswordAuthenticationToken(authuser,password,authuser.getAuthorities());
+			System.out.println("came here bruv");
+			//SecurityContextHolder.setStrategyName("MODE_GLOBAL");
+			SecurityContextHolder.getContext().setAuthentication(doneauth);
+		}
+		
+		
+		
+	}
 	public IUserService getUserServiceDao() {
 		return userServiceDao;
 	}

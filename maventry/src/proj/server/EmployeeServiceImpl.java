@@ -17,21 +17,15 @@ public class EmployeeServiceImpl extends RemoteServiceServlet implements Employe
 	private static final long serialVersionUID = 1L;
 	private ApplicationContext context;
 	private IEmployeeService empserv;
+	
+	@SuppressWarnings("unchecked")
 	public EmployeeServiceImpl(){
-		String Operation1 ="EMP_ROLE";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.isAuthenticated()) {
-		    List<CustomGrantedAuthority> authorities = (List<CustomGrantedAuthority>) authentication.getAuthorities();
-		    for (GrantedAuthority authority : authorities) {
-		        String role = authority.getAuthority();
-		        if(role.equals(Operation1)) {
-		        	context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		    		empserv = context.getBean(IEmployeeService.class);
-		    		break;
-		        }
-		    }
-		} 	
+		
+		
+		context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		empserv = context.getBean(IEmployeeService.class);
 	}
+	
 	@Override
 	public String signUpEmployee(Employee encoded) {
 		return empserv.addEmployee(encoded);

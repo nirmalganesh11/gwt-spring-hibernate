@@ -47,7 +47,7 @@ public class DesignationDialog extends DialogBox {
     	EventBusBoy ebb = EventBusBoy.getInstance();
         eventBus=ebb.getEventBus();
         
-        setText("My Dialog Box");
+        setText("Designation Entry Box");
         setAnimationEnabled(true);
         
 
@@ -74,8 +74,13 @@ public class DesignationDialog extends DialogBox {
 	
 					@Override
 					public void onSuccess(String result) {
-						Window.alert(result);
-						hide();
+						if(!result.equals("RoleNotAllowed")){
+							Window.alert(result);
+							hide();
+						}else {
+							Window.alert("Role is not allowed");
+						}
+						
 					}
 	        	});
 	        	eventBus.fireEvent(new ButtonClickEvent());
@@ -96,6 +101,7 @@ public class DesignationDialog extends DialogBox {
         
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
+        buttonPanel.setSpacing(6);
 
        
         mainPanel.add(new Label("Enter Designation"));
@@ -105,6 +111,7 @@ public class DesignationDialog extends DialogBox {
         mainPanel.add(new Label("Enter Max Salary"));
         mainPanel.add(maxSalary);
         mainPanel.add(buttonPanel);
+        
 
         
         setWidget(mainPanel);

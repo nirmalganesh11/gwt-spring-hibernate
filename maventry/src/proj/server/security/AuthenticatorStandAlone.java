@@ -1,11 +1,17 @@
 package proj.server.security;
 
 import proj.server.*;
+import proj.server.security.securityClasses.*;
 
 public class AuthenticatorStandAlone {
 
 	private UserService userService;
 	private LoginServiceDelegateImpl loginServiceDelegate;
+	
+	
+	public void authenticate(Credential cred) {
+		loginServiceDelegate.authenticate(cred);
+	}
 	
 	public UserService getUserService() {
 		return userService;

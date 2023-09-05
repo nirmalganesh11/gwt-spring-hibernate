@@ -51,7 +51,7 @@
 
 	<bean id="basicAuthenticationEntryPoint"
 		class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
-		<property name="realmName" value="nirmal-security" />
+		<property name="realmName" value="Employee Management System" />
 	</bean>
 
   

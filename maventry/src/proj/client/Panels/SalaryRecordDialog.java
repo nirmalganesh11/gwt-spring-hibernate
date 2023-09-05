@@ -218,9 +218,9 @@ public class SalaryRecordDialog extends DialogBox {
 
 							@Override
 							public void onSuccess(List<SalaryClass> result) {
-								dataProvider.getList().clear();
-								dataProvider.getList().addAll(result);
-								salaryTable.redraw();
+									dataProvider.getList().clear();
+									dataProvider.getList().addAll(result);
+									salaryTable.redraw();
 							}
 			        		 
 			        	 }); 
@@ -234,7 +234,6 @@ public class SalaryRecordDialog extends DialogBox {
          obdk = new DateBox();
          
          addSalary.addClickHandler(new ClickHandler() {
-
 			@Override
 			public void onClick(ClickEvent event) {
 				    obsal = new SalaryClass();
@@ -253,8 +252,12 @@ public class SalaryRecordDialog extends DialogBox {
 				    	   @Override
 				    	   public void onSuccess(String result) {
 				    		   //Window.alert(result);
-				    		   dataProvider.getList().add(obsal);
-						       salaryTable.redraw();
+				    		   if(!result.equals("RoleNotAllowed")) {
+				    			   dataProvider.getList().add(obsal);
+							       salaryTable.redraw(); 
+				    		   }else {
+				    			   Window.alert("Role not allowed");
+				    		   }
 				    	   }
 				       });
 				   }else {

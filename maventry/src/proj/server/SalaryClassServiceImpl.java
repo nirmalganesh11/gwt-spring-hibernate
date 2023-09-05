@@ -23,21 +23,10 @@ public class SalaryClassServiceImpl extends RemoteServiceServlet implements Sala
 	private ApplicationContext context;
 	private ISalaryService salaryServ;
 	
+	@SuppressWarnings("unchecked")
 	public SalaryClassServiceImpl(){
-		
-		String Operation1 ="SALARY_ROLE";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.isAuthenticated()) {
-		    List<CustomGrantedAuthority> authorities = (List<CustomGrantedAuthority>) authentication.getAuthorities();
-		    for (GrantedAuthority authority : authorities) {
-		        String role = authority.getAuthority();
-		        if(role.equals(Operation1)) {
-		        	context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		    		salaryServ = context.getBean(ISalaryService.class);
-		    		break;
-		        }
-		    }
-		}
+		context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		salaryServ = context.getBean(ISalaryService.class);
 		
 	}
 	@Override

@@ -13,12 +13,12 @@
 	    <constructor-arg>
 	      <list>
 		   <security:filter-chain pattern="/**" filters="
-		   												exceptionTranslationFilter,
 		       											securityContextPersistenceFilter,
 		       											usernamePasswordAuthenticationFilter,
 		       											basicAuthenticationFilter,
 		       											securityContextHolderAwareRequestFilter,
 		       											anonymousAuthenticationFilter,
+		       											exceptionTranslationFilter,
 		       											filterInvocationInterceptor"/>
 			</list>
 		</constructor-arg>

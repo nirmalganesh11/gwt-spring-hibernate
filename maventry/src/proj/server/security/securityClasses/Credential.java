@@ -7,9 +7,11 @@ public class Credential{
 	private String password;
 
 	
-	public Credential(){
-		
+	public Credential(String username,String password){
+		this.username = username;
+		this.password = password;
 	}
+	public Credential() {}
 
 	public String getUsername() {
 		return username;

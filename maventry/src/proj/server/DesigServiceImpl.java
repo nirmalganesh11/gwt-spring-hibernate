@@ -22,21 +22,11 @@ public class DesigServiceImpl extends RemoteServiceServlet implements DesigServi
 	private ApplicationContext context;
 	private IDesigService desigserv;
 	
+	@SuppressWarnings("unchecked")
 	public DesigServiceImpl(){
-		String Operation1 ="DESIG_ROLE";
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.isAuthenticated()) {
-		    List<CustomGrantedAuthority> authorities = (List<CustomGrantedAuthority>) authentication.getAuthorities();
-		    for (GrantedAuthority authority : authorities) {
-		        String role = authority.getAuthority();
-		        if(role.equals(Operation1)) {
-		        	context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		    		desigserv = context.getBean(IDesigService.class);
-		    		break;
-		        }
-		    }
-		}	
 		
+		context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		desigserv = context.getBean(IDesigService.class);
 	}
 
 	@Override

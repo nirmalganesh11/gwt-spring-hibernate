@@ -1,13 +1,16 @@
 package proj.client.Panels;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -17,6 +20,8 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.ListDataProvider;
+
 import proj.client.servicesClient.DesigServiceClient;
 import proj.client.servicesClient.DesigServiceClientAsync;
 
@@ -40,6 +45,11 @@ public class SignupPanelClient {
     private final TextBox inputRoles = new TextBox();
     private final ListBox desigDropdown = new ListBox();
     private final Label checkUsernameLabel = new Label();
+    CheckboxCellImpl checkboxCell = new CheckboxCellImpl();
+    ListDataProvider<String> dataProvider;
+    CellList<String> cellList ;
+    List<String> checkboxValues;
+
     
     String array[] = {};
     
@@ -55,6 +65,27 @@ public class SignupPanelClient {
 //	     SimpleEventBus eventBus =ebb.getEventBus();
 		
 		
+		 cellList = new CellList<>(checkboxCell);
+		 checkboxValues = new ArrayList<>();
+		checkboxValues.add("EMP_ROLE");
+		checkboxValues.add("SALARY_ROLE");
+		checkboxValues.add("DESIG_ROLE");
+		
+		
+		dataProvider = new ListDataProvider<>(checkboxValues);
+		dataProvider.addDataDisplay(cellList);
+	
+		
+
+	
+
+
+
+
+
+
+
+
        
         
         //keeping the default role when no changes are made
@@ -141,7 +172,23 @@ public class SignupPanelClient {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				
+				
 				if(!newUsernameTextBox.getText().equalsIgnoreCase("") && !newPasswordTextBox.getText().equalsIgnoreCase("")) {
+					
+//					List<String> selectedLabels = new ArrayList<>();
+//				    for (int i = 0; i < checkboxValues.size(); i++) {
+//				        if (checkboxValues.get(i)) { // Check if checkbox is selected
+//				            // Get the corresponding label from your labelList
+//				            String selectedLabel = dataProvider.get(i);
+//				            selectedLabels.add(selectedLabel);
+//				        }
+//				    }
+//				    Window.alert("reaced here");
+//				    String[] stringArray = selectedLabels.toArray(new String[selectedLabels.size()]);
+					
+					
+					
 					newUser.setUsername(newUsernameTextBox.getText());
 					newUser.setPassword(newPasswordTextBox.getText());
 					String arr[] = inputRoles.getText().split(" ");
@@ -187,13 +234,15 @@ public class SignupPanelClient {
         panel.add(usernameCheckButton);
         panel.add(new Label("New Password:"));
         panel.add(newPasswordTextBox);
-        panel.add(new Label("Input roles With space"));
+        panel.add(new Label("Input roles With space EMP_ROLE DESIG_ROLE SALARY_ROLE"));
         panel.add(inputRoles);
+       //panel.add(cellList);
        // panel.add(new Label("Choose designation"));
        // panel.add(desigDropdown);
         panel.add(signUpButton);
         panel.add(loginLink);
         hq.add(panel);
+        
         vpn.add(hq);
         
         

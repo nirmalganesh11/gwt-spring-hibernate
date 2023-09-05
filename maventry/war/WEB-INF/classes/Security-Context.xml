@@ -53,7 +53,7 @@
 		    <security:filter-security-metadata-source request-matcher="ant" use-expressions="false">
 		    	<security:intercept-url pattern="/maventry/desig" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/emp" access="IS_AUTHENTICATED_FULLY"/>
-		    	<security:intercept-url pattern="/maventry/salary" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		    	<security:intercept-url pattern="/maventry/salary" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/user" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		        <security:intercept-url pattern="/maventry/authenticationService" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		        <security:intercept-url pattern="/maventry/services/**" access="IS_AUTHENTICATED_FULLY"/>
