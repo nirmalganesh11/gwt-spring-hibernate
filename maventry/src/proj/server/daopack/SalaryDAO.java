@@ -1,18 +1,16 @@
 package proj.server.daopack;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
+
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import java.util.List;
 
-import org.hibernate.Session;
 
-import proj.shared.DesigClass;
 import proj.shared.SalaryClass;
-import org.hibernate.Transaction;
 
-public class SalaryDAO implements ISalaryDao{
+
+public class SalaryDAO {
 //	public SessionFactory factory;
 //	public SalaryDAO(SessionFactory factory) {
 //		this.factory = factory;

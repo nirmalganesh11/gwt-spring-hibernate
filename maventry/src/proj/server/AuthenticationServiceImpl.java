@@ -26,6 +26,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 	private static final long serialVersionUID = 1L;
 
 	private AuthenticationProvider authenticationProvider;
+	
 	String username;
 
 	public AuthenticationServiceImpl() {
@@ -35,29 +36,42 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
-
+    
+	@Override
+	public boolean isAuthenticated() {
+		if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()== true) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if(!authentication.getName().equals("anonymous")) {
+				return true;
+			}
+		}
+		return false;
+	}
+    
+    
+	//Had to deprecate this method
     @Override
     public boolean authenticate(String encodedString) {
-    	
-    	if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated() == true) {
-    		System.out.println("came into authentication service impl -------------------");
-    		// Get the current Authentication object from SecurityContextHolder
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            
-            // Print out the basic information from the Authentication object
-            if (authentication != null) {
-                System.out.println("Principal (Username): " + authentication.getName());
-                System.out.println("Credentials (Password or Token): " + authentication.getCredentials());
-                System.out.println("Authorities/Roles: " + authentication.getAuthorities());
-                System.out.println("Authenticated: " + authentication.isAuthenticated());
-                System.out.println("Details: " + authentication.getDetails());
-            } else {
-                System.out.println("No authentication information available.");
-            }
-    		
-    		return true;
-    	}
-    	return false;
+//    	
+//    	if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated() == true) {
+//    		System.out.println("came into authentication service impl -------------------");
+//    		// Get the current Authentication object from SecurityContextHolder
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            
+//            // Print out the basic information from the Authentication object
+//            if (authentication != null) {
+//                System.out.println("Principal (Username): " + authentication.getName());
+//                System.out.println("Credentials (Password or Token): " + authentication.getCredentials());
+//                System.out.println("Authorities/Roles: " + authentication.getAuthorities());
+//                System.out.println("Authenticated: " + authentication.isAuthenticated());
+//                System.out.println("Details: " + authentication.getDetails());
+//            } else {
+//                System.out.println("No authentication information available.");
+//            }
+//    		
+//    		return true;
+//    	}
+//    	return false;
 //    	String username ="";
 //    	String password ="";
 //    	String decodedCreds = decode(encodedString);
@@ -80,6 +94,8 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 //        	return authbro.isAuthenticated();
 //        else
 //        	return false;
+ 
+    	return false;
     }
 	
 	private String decode(String encodedCredentials) {
@@ -125,4 +141,6 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 		ob.logout(getThreadLocalRequest(), getThreadLocalResponse(), SecurityContextHolder.getContext().getAuthentication());
 		
 	}
+
+
 }

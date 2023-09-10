@@ -32,6 +32,7 @@ public class DesignationDialog extends DialogBox {
     private HorizontalPanel buttonPanel;
     private DesigClass ob;
     SimpleEventBus eventBus;
+
     
     @SuppressWarnings("static-access")
 	public DesignationDialog() {

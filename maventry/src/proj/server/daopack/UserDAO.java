@@ -3,12 +3,14 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+
+
 import proj.shared.User;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
 
-public class UserDAO implements IUserDao {
+public class UserDAO {
 	public SessionFactory factory;
 	private HibernateTemplate template;
 	public UserDAO(SessionFactory sessionFactory){
@@ -18,7 +20,7 @@ public class UserDAO implements IUserDao {
 	}
 	
 	
-	@Override
+
 	public String addUser(User toBeAdded)
     {
 		template.save(toBeAdded);
@@ -51,7 +53,7 @@ public class UserDAO implements IUserDao {
 	
     
     
-	@Override
+	
 	public User findByUsername(String username) {
     	
 //    	Session session = factory.openSession();
@@ -80,7 +82,7 @@ public class UserDAO implements IUserDao {
     		
     }
    
-    @Override
+
 	public String validateUsername(String username) {
     
 //    	Session session = factory.openSession();

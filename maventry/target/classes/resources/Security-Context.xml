@@ -17,19 +17,12 @@
 		<constructor-arg>
 		   <ref bean="basicAuthenticationEntryPoint" />
 		</constructor-arg>
-		
-		<property name="userService" ref="userService"/>  
-		<property name="loginServiceDelegate" ref="loginServiceDelegate" />
-		<property name="loginService" ref="loginService"/>
-		<property name="authenticationService" ref="authenticationService"/>
-
+	
 	</bean>
 	
-	<bean id="authenticationService"
-		class="proj.server.security.AuthenticatorStandAlone">
-		<property name="userService" ref="userService" />
-		<property name="loginServiceDelegate" ref="loginServiceDelegate" />
-	</bean>
+	<bean id="sessionFilter" class="proj.server.security.filters.SessionFilter"/>
+	
+
 	
 	 <bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
       	<constructor-arg>
@@ -54,6 +47,8 @@
 		    	<security:intercept-url pattern="/maventry/desig" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/emp" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/salary" access="IS_AUTHENTICATED_FULLY"/>
+		    	<security:intercept-url pattern="/maventry/role" access="IS_AUTHENTICATED_FULLY"/>
+		    	<security:intercept-url pattern="/maventry/fulluser" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/user" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		        <security:intercept-url pattern="/maventry/authenticationService" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		        <security:intercept-url pattern="/maventry/services/**" access="IS_AUTHENTICATED_FULLY"/>

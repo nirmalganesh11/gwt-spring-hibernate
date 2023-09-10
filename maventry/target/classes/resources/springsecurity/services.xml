@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:simple="http://cxf.apache.org/simple" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+        
+        
+                           
+    <bean id="employeeService" class="proj.server.servicepack.EmployeeServiceImpl">
+		<constructor-arg ref="employeeDAO" />
+	</bean>
+	<bean id="salaryService" class="proj.server.servicepack.SalaryServiceImpl">
+		<constructor-arg ref="salaryDAO" />
+	</bean>
+	<bean id="desigService" class="proj.server.servicepack.DesigServiceImpl">
+		<constructor-arg ref="desigDAO" />
+		<property name="userSession">
+			<ref bean="userSession" />
+		</property>
+	</bean>
+	
+	<bean id="userService" class="proj.server.servicepack.UserServiceImpl">
+		<constructor-arg ref="userDAO" />
+	</bean>
+	
+	<bean id="roleService" class="proj.server.servicepack.RoleServiceImpl">
+		<constructor-arg ref="roleDAO" />
+		<constructor-arg ref="roleDecoratorDao" />
+	</bean>  
+	
+	
+	<bean id="fullUserService" class="proj.server.servicepack.FullUserServiceImpl">
+		<constructor-arg ref="fullUserDAO" />
+		<property name="userServ">
+			<ref bean="userService" />
+		</property>
+	</bean> 
+	
+	<bean id="permissionService" class ="proj.server.servicepack.PermissionServiceImpl">
+		<constructor-arg ref="permissionDAO" />
+	</bean>
+	
+	<bean id="userSession" class="proj.server.sessionManagement.UserSession" />
+	
+
+	<import resource ="classpath:applicationContext.xml" />
+</beans>

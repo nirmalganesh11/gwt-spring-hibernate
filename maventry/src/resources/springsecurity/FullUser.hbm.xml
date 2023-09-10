@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="proj.shared.security.FullUser" table="fullusers">
+        <id name="fuid" type="int">
+            <column name="fuid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="empId" column ="empId" type ="int"/>
+        <property name="userId" column ="userId" />
+        <property name="firstName" column ="firstName" />
+        <property name="lastName" column ="lastName" />
+        <property name="title" column ="title" />
+        <property name="location" column ="location" />
+        <property name="email" column ="email" />
+        <property name="phno" column ="phno" />
+        <property name="password" column ="password" />
+        
+         
+    </class>
+</hibernate-mapping>

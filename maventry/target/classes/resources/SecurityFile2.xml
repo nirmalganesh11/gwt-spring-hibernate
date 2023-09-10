@@ -15,28 +15,28 @@
 		class="proj.server.security.DaoProvider" scope="prototype">
 		<property name="passwordEncoder" ref="encoder"/>
 		<property name="userDetailsService" ref="loginService" />
+		<property name="userSession" ref="userSession" />
 	</bean>
 	
 	
 	<bean id="encoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method="getInstance"/>
 	
 
-	<bean id="loginService" class="proj.server.security.LoginServiceBoy"> 
-		<property name="userserv">
-      		<ref bean="userServiceData" />
+	<bean id="loginService" class="proj.server.security.DetailsAccessService"> 
+		<property name="userServ">
+      		<ref bean="userService" />
     	</property>
+    	<property name="roleServ">
+      		<ref bean="roleService" />
+    	</property>
+    	<property name="userSession">
+      		<ref bean="userSession" />
+    	</property>
+    	
+    	
 	</bean>
   		
-  	<bean id="userService"
-		class="proj.server.security.UserServiceImpl">
-	</bean>
-	
-	<bean id="loginServiceDelegate" class="proj.server.security.LoginServiceDelegateImpl">
-		<property name="userServiceDao">
-      		<ref bean="userServiceData" />
-    	</property>
-	</bean>
-		<bean id="authenticationEntryPoint"
+	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
 		<constructor-arg value="/Maventry.html">
 		</constructor-arg>

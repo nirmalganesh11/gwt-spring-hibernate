@@ -9,7 +9,7 @@
 
      <servlet>
     <servlet-name>EmployeeServlet</servlet-name>
-    <servlet-class>proj.server.EmployeeServiceImpl</servlet-class>
+    <servlet-class>proj.server.EmployeeServiceImplServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -20,7 +20,7 @@
   
   <servlet>
     <servlet-name>DesigServlet</servlet-name>
-    <servlet-class>proj.server.DesigServiceImpl</servlet-class>
+    <servlet-class>proj.server.DesigServiceImplServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -31,7 +31,7 @@
   
   <servlet>
     <servlet-name>UserServlet</servlet-name>
-    <servlet-class>proj.server.UserServiceImpl</servlet-class>
+    <servlet-class>proj.server.UserServiceImplServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -41,13 +41,35 @@
   
    <servlet>
     <servlet-name>SalaryServlet</servlet-name>
-    <servlet-class>proj.server.SalaryClassServiceImpl</servlet-class>
+    <servlet-class>proj.server.SalaryClassServiceImplServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
     <servlet-name>SalaryServlet</servlet-name>
     <url-pattern>/maventry/salary</url-pattern>
   </servlet-mapping>
+  
+  
+     <servlet>
+    <servlet-name>RoleServlet</servlet-name>
+    <servlet-class>proj.server.RoleServiceImplServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>RoleServlet</servlet-name>
+    <url-pattern>/maventry/role</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>fullUserServlet</servlet-name>
+    <servlet-class>proj.server.FullUserServiceImplServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>fullUserServlet</servlet-name>
+    <url-pattern>/maventry/fulluser</url-pattern>
+  </servlet-mapping>
+  
   
   
   <servlet>
@@ -77,6 +99,7 @@
     			 classpath:filterChainProxy.xml
     			 classpath:SecurityFile2.xml
     			 classpath:SpringFilters.xml
+    			 classpath:services.xml
     			 
     </param-value>
 </context-param>

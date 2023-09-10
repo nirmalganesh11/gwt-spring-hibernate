@@ -16,11 +16,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import java.util.List;
+
+
 import proj.shared.Employee;
 
 
 
-public class EmployeeDAO implements IEmployeeDao{
+public class EmployeeDAO {
 	 public SessionFactory factory;
 	 
 	    public EmployeeDAO(SessionFactory sessionFactory) {
@@ -121,7 +123,7 @@ public class EmployeeDAO implements IEmployeeDao{
 	                transaction.commit();
 	                return true;
 	            } else {
-	                System.out.println("Employee with username '" + remEmp + "' not found.");
+	                System.out.println("Employee with username '" + remEmp + "not found.");
 	                return false;
 	            }
 	        } catch (Exception e) {

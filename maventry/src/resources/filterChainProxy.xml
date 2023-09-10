@@ -18,6 +18,7 @@
 		       											basicAuthenticationFilter,
 		       											securityContextHolderAwareRequestFilter,
 		       											anonymousAuthenticationFilter,
+		       											sessionFilter,
 		       											exceptionTranslationFilter,
 		       											filterInvocationInterceptor"/>
 			</list>

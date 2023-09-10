@@ -10,28 +10,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import proj.server.security.securityClasses.*;
-import proj.server.servicepack.IUserService;
+import proj.server.sessionManagement.UserSession;
+
 
 public class DaoProvider extends DaoAuthenticationProvider {
 	
+	private UserDetailsService userServiceMechanism;
 	
+	private UserSession userSession;
 	
-   @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println("came into the dao provider authenticate -------------------");
+ 
 
+@Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         Authentication AuthUser = null;
-        // Replace this logic with   your actual user authentication mechanism
+
         UserDetails userDetails = getUserDetails(username);
+        
         if(userDetails != null && userDetails.getPassword().equals(password)) {
+        	
         	AuthUser = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
         	SecurityContextHolder.getContext().setAuthentication(AuthUser);
-        	//System.out.println(AuthUser.isAuthenticated());
+        	userSession.setAuthenticatedUser(AuthUser);
+        	
         }
-		System.out.println("exiting the dao provider authenticate -------------------");
-
+        
         return AuthUser;
     }	
 
@@ -43,9 +49,26 @@ public class DaoProvider extends DaoAuthenticationProvider {
     
     private UserDetails getUserDetails(String username) {
     	
-    		UserDetailsService ob = getUserDetailsService();
-    		UserDetails fulldetails = ob.loadUserByUsername(username);
+    		userServiceMechanism = getUserDetailsService();
+    		UserDetails fulldetails = userServiceMechanism.loadUserByUsername(username);
     		
     		return fulldetails;
     	}
+    
+    
+    public UserDetailsService getUserServiceMechanism() {
+  		return userServiceMechanism;
+  	}
+
+  	public void setUserServiceMechanism(UserDetailsService userServiceMechanism) {
+  		this.userServiceMechanism = userServiceMechanism;
+  	}
+
+  	public UserSession getUserSession() {
+  		return userSession;
+  	}
+
+  	public void setUserSession(UserSession userSession) {
+  		this.userSession = userSession;
+  	}
 }

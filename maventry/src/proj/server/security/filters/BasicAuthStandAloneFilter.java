@@ -30,16 +30,12 @@ public class BasicAuthStandAloneFilter extends OncePerRequestFilter{
 	
 	private AuthenticationEntryPoint authenticationEntryPoint;
 	private AuthenticationManager authenticationManager;
-	
-	private LoginServiceDelegateImpl loginServiceDelegate;
-	private UserService userService;
-	private LoginServiceBoy loginService;
-	private AuthenticatorStandAlone authenticationService;
-	
+	private String username;
+	private String password;
 	
 	public BasicAuthStandAloneFilter(AuthenticationManager authenticationManager) {
 		if (authenticationManager == null) {
-			System.out.println("auth manager null ra bro");
+			System.out.println("Authentication Manager cannot be null");
 		}
 		this.authenticationManager = authenticationManager;
 	}
@@ -47,10 +43,10 @@ public class BasicAuthStandAloneFilter extends OncePerRequestFilter{
 	public BasicAuthStandAloneFilter(AuthenticationManager authenticationManager,
 			AuthenticationEntryPoint authenticationEntryPoint) {
 		if (authenticationManager == null) {
-			System.out.println("Auth manager cannot be null bruv");
+			System.out.println("Authentication manager cannot be null");
 		}
 		if (authenticationEntryPoint == null) {
-			System.out.println("Entry point cannot be nulll bruv");
+			System.out.println("Entry point cannot be nulll");
 		}
 		this.authenticationManager = authenticationManager;
 		this.authenticationEntryPoint = authenticationEntryPoint;
@@ -60,79 +56,44 @@ public class BasicAuthStandAloneFilter extends OncePerRequestFilter{
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		System.out.println("---------------------"+"came into basic auth filter"+ "-------------------------------------");
-		String requestedUrl = request.getRequestURL().toString();
-		System.out.println("here its asking this servlet"+requestedUrl);
-		//authenticationEntryPoint.commence(request, response, null);
+
 		String header = request.getHeader("Authorization");
 		if (header == null || !header.toLowerCase().startsWith("basic ")) {
-			//change add
-			System.out.println("---------------------"+"exiting basic auth filter"+ "-------------------------------------");
 			filterChain.doFilter(request,response);
 			return;
 		}
-		String base64Credentials = header.substring("Basic ".length());
-		String username ="";
-    	String password ="";
-    	String decodedCreds = decode(base64Credentials);
-    	  String[] credentials = decodedCreds.split(":");
-          if (credentials.length == 2) {
-              username = credentials[0];
-              password = credentials[1];
-          } else {
-              System.out.println("Invalid credentials format");
-          }
-//          System.out.println(username +"------------"+password);
-//		Credential object = new Credential(username,password);
-//		//authenticationService.authenticate(object);
-//		System.out.println("that came here bro for the first time");
 		
-        UsernamePasswordAuthenticationToken newToken = new UsernamePasswordAuthenticationToken(username,password);
-		authenticationManager.authenticate(newToken);
-		System.out.println("---------------------"+"exiting auth filter after authentication"+ "-------------------------------------");
-
+		String base64Credentials = header.substring("Basic ".length());
+    	decode(base64Credentials);
+    	         
+        UsernamePasswordAuthenticationToken newSignInToken = new UsernamePasswordAuthenticationToken(username,password);
+		authenticationManager.authenticate(newSignInToken);
 		
 	}
-	private String decode(String encodedCredentials) {
+	
+	
+	private void decode(String encodedCredentials) {
 	    try {
 	        byte[] decodedBytes = Base64.getDecoder().decode(encodedCredentials);
-	        return new String(decodedBytes, StandardCharsets.UTF_8);
+	        String decodeCreds = new String(decodedBytes, StandardCharsets.UTF_8);
+	        setCredentials(decodeCreds);
+	        
 	    } catch (IllegalArgumentException e) {
-	        // Handle decoding errors
-	        return null;
+	       
+	        return;
 	    }
 	}
-
 	
-	public LoginServiceDelegateImpl getLoginServiceDelegate() {
-		return loginServiceDelegate;
+	private void setCredentials(String wholeString) {
+		
+		String[] credentials = wholeString.split(":");
+        if (credentials.length == 2) {
+            username = credentials[0];
+            password = credentials[1];
+        } else {
+            System.out.println("Invalid credentials format");
+        }
+		
 	}
-
-	public void setLoginServiceDelegate(LoginServiceDelegateImpl loginServiceDelegate) {
-		this.loginServiceDelegate = loginServiceDelegate;
-	}
-
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	public LoginServiceBoy getLoginService() {
-		return loginService;
-	}
-
-	public void setLoginService(LoginServiceBoy loginService) {
-		this.loginService = loginService;
-	}
-
-	public AuthenticatorStandAlone getAuthenticationService() {
-		return authenticationService;
-	}
-
-	public void setAuthenticationService(AuthenticatorStandAlone authenticationService) {
-		this.authenticationService = authenticationService;
-	}
+	
 }

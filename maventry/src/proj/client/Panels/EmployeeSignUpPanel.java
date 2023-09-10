@@ -50,6 +50,7 @@ public class EmployeeSignUpPanel extends DialogBox {
         
         DesigClass desigVal;
         Employee employee;
+        public Employee editableEmployee;
         
         
         List<TextBox> totalTextboxes = new ArrayList<>();
@@ -64,10 +65,22 @@ public class EmployeeSignUpPanel extends DialogBox {
 	            textbox.setValue(""); 
 	        }
 	    }
+	    public void setTextBoxDataForEditable() {
+	    	if(editableEmployee != null) {
+	    		nameTextBox.setText(editableEmployee.getName());
+	    		salaryTextBox.setText(String.valueOf(editableEmployee.getSalary()));
+	    		usernameTextBox.setText(editableEmployee.getUsername());
+	    		passwordTextBox.setText(editableEmployee.getPassword());
+
+	    	}
+	    }
 	    
 	    @SuppressWarnings("static-access")
-		public EmployeeSignUpPanel() {
-	     
+		public EmployeeSignUpPanel(Employee pass) {
+	    	
+	    	editableEmployee = pass;
+	    	setTextBoxDataForEditable();
+	    	
 	    	empserv = GWT.create(EmployeeServiceClient.class);
 	    	desigserv = GWT.create(DesigServiceClient.class);
 	    	errorLabel.setStyleName("redLabel");

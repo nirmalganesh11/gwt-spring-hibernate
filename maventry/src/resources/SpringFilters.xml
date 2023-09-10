@@ -25,7 +25,7 @@
        	 	<ref bean="authenticationEntryPoint" />
     	</constructor-arg>
     	<property name="accessDeniedHandler">
-      		<bean class="proj.server.security.filters.NirmalAccessDeniedHandler" />
+      		<bean class="proj.server.security.filters.CustomAccessDeniedHandler" />
     	</property>
   </bean>
 	

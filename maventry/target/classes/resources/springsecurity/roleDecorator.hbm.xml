@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="proj.server.security.securityClasses.RoleDecorator" table="role_permissions">
+        <id name="roleId" type="int">
+            <column name="role_id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="roleName" column="role_name"/>
+        
+      <property name="rolePermissions" column="role_permissions" type="proj.shared.StringArrayUserType" />
+
+
+    </class>
+</hibernate-mapping>

@@ -202,7 +202,7 @@ public class SignupPanelClient {
 						public void onSuccess(String result) {
 							Window.alert("User Signup Happened");
 							RootPanel.get().clear(); 
-							dbp.createDashboardPanel(newUser);
+							dbp.createDashboardPanel();
 						}
 					});
 				}

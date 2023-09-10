@@ -1,20 +1,40 @@
 package proj.shared;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+import proj.shared.security.Role;
+
 public class User implements IsSerializable {
+	
 	private int id;
 	private String username;
 	private String password;
 	private String[] rolesArray;
+	
 	public User() {}
+	
 	public User(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
 	}
-	
-	
+	public User(String username,String password,List<Role> rolesList) {
+		this.username = username;
+		this.password = password;
+		this.rolesArray = convertRolesArray(rolesList);
+		
+	}
+	public String [] convertRolesArray(List<Role> rolesList) {
+		String [] rolenames = new String [rolesList.size()];
+		int count =0;
+		for(Role r: rolesList) {
+			rolenames[count++] = r.getRoleName();
+		}
+		return rolenames;
+		
+	}
 	public String[] getRolesArray() {
 		return rolesArray;
 	}

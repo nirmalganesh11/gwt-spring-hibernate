@@ -3,15 +3,15 @@ package proj.server.daopack;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
+
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+
+
 import proj.shared.DesigClass;
 
-public class DesigDAO implements IDesigDAO {
+public class DesigDAO {
 	
 	public SessionFactory factory;
 	private HibernateTemplate template;
