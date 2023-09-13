@@ -60,5 +60,14 @@ public class EmployeeServiceImplServlet extends RemoteServiceServlet implements 
 	public List<Employee> getEmployeesOnDesig(String designame) {
 		return empserv.getEmployeesOnDesig(designame);
 	}
+
+	@Override
+	public String updateEmployee(Employee update) {
+		return empserv.updateEmployee(update.getId(), update.getName(), update.getSalary(),update.getDesignation(),update.getPassword());
+	}
+	
+	
+	
+	
 	
 }

@@ -31,26 +31,13 @@ public class DesigServiceImplServlet extends RemoteServiceServlet implements Des
 
 	@Override
 	public List<String> getDesignations() {
-		try {
 			return desigserv.getUsernames();
-		} catch (AccessDeniedException e) {
-
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	@Override
 	public DesigClass getDesignation(String designame) {
-		
-		try {
 			return desigserv.getDesignation(designame);
-		} catch (AccessDeniedException e) {
-			
-			e.printStackTrace();
-		}
-		
-		return null;
+
 	}
 
 }

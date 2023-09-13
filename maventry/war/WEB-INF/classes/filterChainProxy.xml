@@ -20,8 +20,12 @@
 		       											anonymousAuthenticationFilter,
 		       											sessionFilter,
 		       											exceptionTranslationFilter,
-		       											filterInvocationInterceptor"/>
+		       											filterInvocationInterceptor,
+		       											"/>
 			</list>
+			
+			
+			
 		</constructor-arg>
 		<property name="firewall" ref="httpFirewall"/>
 	</bean>

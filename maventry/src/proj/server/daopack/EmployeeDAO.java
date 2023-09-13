@@ -33,8 +33,10 @@ public class EmployeeDAO {
 	    public String addEmployee(Employee toBeAdded)
 	    {
 	    	Employee alreadyPresentEmp = getEmployee(toBeAdded.getUsername());
-	    	if(alreadyPresentEmp !=null)
-	    		return "Employee Already Present";
+	    	if(alreadyPresentEmp !=null) {
+	    		
+	    		return "already present";
+	    	}
 	    	else {
 	    		Session session = factory.openSession();
 	    		Transaction transaction = null;
@@ -86,7 +88,7 @@ public class EmployeeDAO {
 	        return listOfEmp;
 	    }
 	   
-	    public void updateEmployee(int id, String name, int salary){
+	    public void updateEmployee(int id, String name, int salary,String designation,String password){
 	        Session session = factory.openSession();
 	        Transaction transaction = null;
 	        try{
@@ -94,6 +96,10 @@ public class EmployeeDAO {
 	            Employee product = (Employee) session.get(Employee.class, id);
 	            product.setName(name);
 	            product.setSalary(salary);
+	            product.setDesignation(designation);
+	            product.setPassword(password);
+	            
+	            
 	            session.update(product);
 	            transaction.commit();
 	        }

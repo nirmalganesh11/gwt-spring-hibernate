@@ -9,8 +9,8 @@ public interface DesigService {
 	
 	String addDesig(DesigClass toBeAdded);
 
-	List<String> getUsernames() throws AccessDeniedException;
+	List<String> getUsernames();
 
-	DesigClass getDesignation(String designame) throws AccessDeniedException;
+	DesigClass getDesignation(String designame);
 	
 }

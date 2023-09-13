@@ -26,19 +26,19 @@ public class DaoProvider extends DaoAuthenticationProvider {
 		
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        Authentication AuthUser = null;
+        Authentication authUser = null;
 
         UserDetails userDetails = getUserDetails(username);
         
         if(userDetails != null && userDetails.getPassword().equals(password)) {
         	
-        	AuthUser = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-        	SecurityContextHolder.getContext().setAuthentication(AuthUser);
-        	userSession.setAuthenticatedUser(AuthUser);
+        	authUser = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        	SecurityContextHolder.getContext().setAuthentication(authUser);
+        	userSession.setAuthenticatedUser(authUser);
         	
         }
         
-        return AuthUser;
+        return authUser;
     }	
 
     @Override

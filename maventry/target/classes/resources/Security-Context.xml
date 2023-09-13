@@ -32,6 +32,25 @@
       	  </list>
       	</constructor-arg>
   	</bean>
+  	
+  	
+ 
+
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
 	
 	<bean id="filterInvocationInterceptor"
 		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">

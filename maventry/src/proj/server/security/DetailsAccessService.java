@@ -30,7 +30,6 @@ public class DetailsAccessService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		
-		
 		UserAccount newacc = new UserAccount();
 		List<Role> userRoles = new ArrayList<Role>();
 		User user =	userServ.findByUsername(username);
@@ -43,7 +42,6 @@ public class DetailsAccessService implements UserDetailsService {
 		List<String> permissionsAll = new ArrayList<>();
 		
 		for(String roleName: arr) {
-			System.out.println(roleName+"----------came here");
 			String [] permissionArray = roleServ.givePermissions(roleName);
 			if(permissionArray != null) {
 				for(String permission:permissionArray) {
@@ -66,7 +64,6 @@ public class DetailsAccessService implements UserDetailsService {
 		
 		return newacc;	
 	}
-
 
 	public UserService getUserServ() {
 		return userServ;

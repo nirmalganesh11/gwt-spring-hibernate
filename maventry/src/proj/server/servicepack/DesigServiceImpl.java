@@ -1,11 +1,13 @@
 package proj.server.servicepack;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.access.annotation.Secured;
 import proj.server.Exceptions.AccessDeniedException;
 import proj.server.daopack.DesigDAO;
 import proj.server.security.securityClasses.CustomGrantedAuthority;
@@ -20,9 +22,7 @@ public class DesigServiceImpl implements DesigService {
 	
 	private UserSession userSession;
 	
-
-
-
+	
 	public DesigServiceImpl(DesigDAO desigdao){
 		this.desigdao = desigdao;
 	}
@@ -31,30 +31,33 @@ public class DesigServiceImpl implements DesigService {
 	@Override
 	public String addDesig(DesigClass toBeAdded) {
 		
-		Boolean authorised = false;
-		if(userSession != null) {
-			for(String permission: userSession.getRightsAssigned()) {
-				if(MethodPermissions.WRITE_DESIGNATION.name().equals(permission)) {
-					authorised = true;
-				}
-			}
-			
+		if(checkPermission(MethodPermissions.WRITE_DESIGNATION.name())) {
+			return "Dont have enough permissions";
 		}
-		if(!authorised)
-			return "Not Enough Permissions";
+		
 		
 		return desigdao.addDesig(toBeAdded);
 	}
 	
 
 	@Override
-	public List<String> getUsernames() throws AccessDeniedException {
+	public List<String> getUsernames(){
+		
+		if(checkPermission(MethodPermissions.READ_DESIGNATION.name())) {
+			return null;
+		}
 			
 		return desigdao.getUsernames();
 	}
 	
+
 	@Override
-	public DesigClass getDesignation(String designame) throws AccessDeniedException {
+	public DesigClass getDesignation(String designame){
+		
+		if(checkPermission(MethodPermissions.READ_DESIGNATION.name())) {
+			return null;
+		}
+		
 		
 		return desigdao.getDesignation(designame);
 	}
@@ -78,4 +81,16 @@ public class DesigServiceImpl implements DesigService {
 	public void setUserSession(UserSession userSession) {
 		this.userSession = userSession;
 	}
+	public Boolean checkPermission(String authority) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		for(GrantedAuthority ga: auth.getAuthorities()) {
+			if(ga.getAuthority().equals(authority)) {
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
+	
 }

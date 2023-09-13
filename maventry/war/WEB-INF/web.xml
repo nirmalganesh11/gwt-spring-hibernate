@@ -100,6 +100,8 @@
     			 classpath:SecurityFile2.xml
     			 classpath:SpringFilters.xml
     			 classpath:services.xml
+    			 classpath:methodSecurity.xml
+    			 classpath:log4j.xml
     			 
     </param-value>
 </context-param>

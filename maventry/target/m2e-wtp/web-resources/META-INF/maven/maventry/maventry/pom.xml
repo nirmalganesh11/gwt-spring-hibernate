@@ -133,6 +133,12 @@
     	<artifactId>commons-dbcp2</artifactId>
     	<version>2.9.0</version> <!-- Use the appropriate version -->
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
+	<dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-aspects</artifactId>
+    	<version>4.3.19.RELEASE</version>
+	</dependency>
 
   </dependencies>
   

@@ -13,4 +13,6 @@ public interface EmployeeServiceClient extends RemoteService{
 	boolean remEmployee(String remEmp);
 	Employee getEmployee(String username);
 	List<Employee> getEmployeesOnDesig(String designame);
+	String updateEmployee(Employee update);
+	
 }

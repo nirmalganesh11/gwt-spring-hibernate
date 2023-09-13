@@ -3,18 +3,20 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
-  <!-- Define an appender to log to the console -->
-  <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+  <!-- Define an appender to log to a file -->
+  <appender name="securityEvents" class="org.apache.log4j.FileAppender">
+    <param name="File" value="security-events.log" />
+    <param name="Append" value="true" />
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+      <param name="ConversionPattern" value="%d %-5p [%c] %m%n" />
     </layout>
   </appender>
 
-  <!-- Define the root logger -->
-  <root>
-   <priority value="DEBUG" />
-    <appender-ref ref="CONSOLE" />
-  </root>
+  <!-- Set the log level for the LoggerListener -->
+  <logger name="org.springframework.security.access.event.LoggerListener">
+    <level value="DEBUG" />
+    <appender-ref ref="securityEvents" />
+  </logger>
 
   <!-- You can define additional loggers and appenders here if needed -->
 

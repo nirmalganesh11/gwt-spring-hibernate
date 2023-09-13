@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+   			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+        
+        
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    	<constructor-arg>
+        	<list>
+            	<bean class="org.springframework.security.access.vote.RoleVoter" />
+        	</list>
+    	</constructor-arg>
+	</bean>
+
+
+	<bean id="methodSecurityInterceptor" class="org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor">
+    	<property name="authenticationManager" ref="authenticationManager" />
+    	<property name="accessDecisionManager" ref="accessDecisionManager" />
+    	<property name="securityMetadataSource" ref="methodSecurityMetadataSource" />
+	</bean>
+
+	<bean id="methodSecurityMetadataSource" class="org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource">
+    	<constructor-arg>
+       	 	<map>
+            	<entry key="proj.server.servicepack.DesigServiceImpl.addDesig" value-ref="ROLE_WRITE_DESIGNATION" />
+            	<entry key="proj.server.servicepack.DesigServiceImpl.getUsernames" value-ref="ROLE_READ_DESIGNATION" />
+            	<entry key="proj.server.servicepack.DesigServiceImpl.getDesignation" value-ref="ROLE_READ_DESIGNATION" />
+            		
+        	</map>
+    	</constructor-arg>
+	</bean>
+
+	
+	
+	<security:global-method-security pre-post-annotations="disabled" proxy-target-class="true"
+			access-decision-manager-ref="accessDecisionManager" secured-annotations="enabled">
+
+    	<security:protect-pointcut expression="execution(* proj.server.servicepack.DesigServiceImpl.*(..))" access="ROLE_READ_DESIGNATION,ROLE_WRITE_DESIGNATION" />
+		
+	</security:global-method-security>
+	
+
+
+  	
+  	<bean id="ROLE_WRITE_DESIGNATION" class="org.springframework.security.access.SecurityConfig">
+    	<constructor-arg>
+        	<value>ROLE_WRITE_DESIGNATION</value>
+    	</constructor-arg>
+	</bean>
+
+	<bean id="ROLE_READ_DESIGNATION" class="org.springframework.security.access.SecurityConfig">
+    	<constructor-arg>
+        	<value>ROLE_READ_DESIGNATION</value>
+    	</constructor-arg>
+	</bean>
+        
+    <bean id="loggerListener" class="org.springframework.security.access.event.LoggerListener" />
+
+</beans>

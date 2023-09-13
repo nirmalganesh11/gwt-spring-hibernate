@@ -12,4 +12,5 @@ public interface EmployeeServiceClientAsync {
 	void getEmployee(String username,AsyncCallback<Employee>callback);
 	void getEmployeesOnDesig(String designame,AsyncCallback<List<Employee>> callback);
 	void getEmployees(AsyncCallback<List<Employee>> asyncCallback);
+	void updateEmployee(Employee update,AsyncCallback<String> asyncCallback);
 }
