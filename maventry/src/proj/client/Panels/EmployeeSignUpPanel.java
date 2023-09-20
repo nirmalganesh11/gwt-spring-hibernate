@@ -41,11 +41,11 @@ public class EmployeeSignUpPanel extends DialogBox {
         TextBox salaryTextBox = new TextBox();
         TextBox usernameTextBox = new TextBox();
         TextBox passwordTextBox = new TextBox();
-        TextBox removeTextBox = new TextBox();
+        ///TextBox removeTextBox = new TextBox();
         Button cancelButton = new Button("Cancel");
         
         Button addButton = new Button("Add");
-        Button removeButton = new Button("Remove");
+        //Button removeButton = new Button("Remove");
         Label success = new Label();
         
         DesigClass desigVal;
@@ -193,38 +193,38 @@ public class EmployeeSignUpPanel extends DialogBox {
 	    	 
 	    	 
 	         
-	         removeButton.addClickHandler(new ClickHandler(){
-
-	 			@Override
-	 			public void onClick(ClickEvent event) {
-	 	          
-	 	            if(removeTextBox.getText() != "") {
-	 	            	String removedUser = removeTextBox.getText();
-	 	            	
-	 	                empserv.remEmployee(removedUser,new AsyncCallback<Boolean>() {
-	 	                	
-	 	    				@Override
-	 	    				public void onFailure(Throwable caught) {
-	 	    					Window.alert(caught.toString());
-	 	    				}
-	 	
-	 	    				@Override
-	 	    				public void onSuccess(Boolean result) {
-	 	    					if(result) {
-	 	    						Window.alert("removed employee from db");
-	 	    						eventBus.fireEvent(new ButtonClickEvent());
-	 	    					}
-	 	    					else {
-	 	    						Window.alert("Employee with given usernamenot found");
-	 	    					}
-	 	    				}
-	 	                });
-	 	            }
-	 	        	
-	 			}
-	         	
-	         	
-	         });
+//	         removeButton.addClickHandler(new ClickHandler(){
+//
+//	 			@Override
+//	 			public void onClick(ClickEvent event) {
+//	 	          
+//	 	            if(removeTextBox.getText() != "") {
+//	 	            	String removedUser = removeTextBox.getText();
+//	 	            	
+//	 	                empserv.remEmployee(removedUser,new AsyncCallback<Boolean>() {
+//	 	                	
+//	 	    				@Override
+//	 	    				public void onFailure(Throwable caught) {
+//	 	    					Window.alert(caught.toString());
+//	 	    				}
+//	 	
+//	 	    				@Override
+//	 	    				public void onSuccess(Boolean result) {
+//	 	    					if(result) {
+//	 	    						Window.alert("removed employee from db");
+//	 	    						eventBus.fireEvent(new ButtonClickEvent());
+//	 	    					}
+//	 	    					else {
+//	 	    						Window.alert("Employee with given usernamenot found");
+//	 	    					}
+//	 	    				}
+//	 	                });
+//	 	            }
+//	 	        	
+//	 			}
+//	         	
+//	         	
+//	         });
 	         
 	         
 	         cancelButton.addClickHandler(new ClickHandler(){
@@ -237,7 +237,7 @@ public class EmployeeSignUpPanel extends DialogBox {
 	         
 	         HorizontalPanel hzp = new HorizontalPanel();
 	         hzp.add(addButton);
-	         hzp.add(removeButton);
+	         //hzp.add(removeButton);
 	         hzp.add(cancelButton);
 	         hzp.setSpacing(5);
 	         
@@ -260,8 +260,8 @@ public class EmployeeSignUpPanel extends DialogBox {
 	         verticalPanel.add(passwordTextBox);
 	         
 
-	         verticalPanel.add(new Label("Enter Username to remove"));
-	         verticalPanel.add(removeTextBox);
+	        // verticalPanel.add(new Label("Enter Username to remove"));
+	         //verticalPanel.add(removeTextBox);
 
 	         verticalPanel.setSpacing(5);
 	         verticalPanel.add(success);

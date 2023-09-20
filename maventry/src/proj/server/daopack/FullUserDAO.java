@@ -63,7 +63,14 @@ public class FullUserDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Boolean authenticateWithUserIdMail(String userid,String email) {
+		
+        List<FullUser> users = (List<FullUser>) template.findByNamedQuery("User.findByUserIdAndEmail", userid, email);
 
+        return !users.isEmpty();
+		
+	}
 
 
 }

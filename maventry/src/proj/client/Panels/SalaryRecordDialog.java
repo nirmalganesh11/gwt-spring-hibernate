@@ -13,6 +13,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -32,7 +33,7 @@ import proj.shared.Employee;
 import proj.shared.SalaryClass;
 import com.google.gwt.user.datepicker.client.DateBox;
 
-public class SalaryRecordDialog extends DialogBox {
+public class SalaryRecordDialog extends Composite {
 	
 	private final EmployeeServiceClientAsync empserv = GWT.create(EmployeeServiceClient.class);
     private final DesigServiceClientAsync desigserv = GWT.create(DesigServiceClient.class);
@@ -66,7 +67,7 @@ public class SalaryRecordDialog extends DialogBox {
     
     public SalaryRecordDialog(){
     	
-    	 setText("Salary Record Box");
+    	 //setText("Salary Record Box");
     	 salaryTable = new CellTable<>();
     	 dataProvider = new ListDataProvider<>();
     	 dataProvider.addDataDisplay(salaryTable);
@@ -346,7 +347,8 @@ public class SalaryRecordDialog extends DialogBox {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				hide();
+				//hide();
+				setVisible(false);
 			}
         	
         });
@@ -376,7 +378,7 @@ public class SalaryRecordDialog extends DialogBox {
         mainPanel.add(buttonPanel);
 
         // Set the main panel as the content of the dialog box
-        setWidget(mainPanel);
+        initWidget(mainPanel);
     }
 
     // Add any additional methods or logic as needed

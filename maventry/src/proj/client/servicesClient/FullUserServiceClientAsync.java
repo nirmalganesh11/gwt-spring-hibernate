@@ -16,6 +16,8 @@ public interface FullUserServiceClientAsync {
 	
 	void deleteFullUser(FullUser user,AsyncCallback<String> callback);
 	
+	void authenticateUserIdMail(String userId,String email,AsyncCallback<Boolean> callback);
+	
 	
 	
 	

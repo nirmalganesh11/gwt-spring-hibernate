@@ -4,7 +4,10 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.SimpleEventBus;
 import proj.client.Panels.EventHandlingBus.*;
 import proj.client.Security.SecurityPanel;
-
+import proj.client.newsecurity.DesignationInput;
+import proj.client.newsecurity.EmployeeForm;
+import proj.client.newsecurity.LoginView;
+import proj.client.newsecurity.SalaryPanel;
 import proj.client.servicesClient.*;
 
 
@@ -27,6 +30,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -38,12 +42,25 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
+import gwt.material.design.client.constants.ButtonType;
+import gwt.material.design.client.constants.IconType;
+import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialCard;
+import gwt.material.design.client.ui.MaterialIcon;
+import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialLink;
+import gwt.material.design.client.ui.MaterialNavBar;
+import gwt.material.design.client.ui.MaterialPanel;
 //import proj.client.AppService;
 //import proj.client.AppServiceAsync;
 import proj.shared.DesigClass;
 import proj.shared.Employee;
 import proj.shared.User;
 import proj.shared.security.Role;
+
+import gwt.material.design.client.ui.MaterialSideNav;
+import gwt.material.design.client.ui.MaterialTextBox;
+import gwt.material.design.client.ui.MaterialTitle;
 
 import com.google.gwt.cell.client.ClickableTextCell;
 
@@ -52,11 +69,17 @@ public class DashBoardPanelClient {
 	public CellTable<Employee> employeeTable;
 	final SingleSelectionModel<Employee> selectionModel = new SingleSelectionModel<>();
 	
+    HorizontalPanel contentPanel = new HorizontalPanel();
+    
+    VerticalPanel employeeButtonsPanel = new VerticalPanel();
+    
+    VerticalPanel wholenew = new VerticalPanel();
+	
     public ListDataProvider<Employee> dataProvider;
     public DesigClass desigVal;
     
     Button openDesignationDialog = new Button("Create Designation");
-    Button AddEmployeeButton = new Button("Add Employee");
+    Button addEmployeeButton = new Button("Add Employee");
     Button addSalRecordButton = new Button("Add Salary Record");
     Button editEmployeeButton = new Button("Edit Employee");
     Button removeEmployeeButton = new Button("Remove Employee");
@@ -69,6 +92,15 @@ public class DashBoardPanelClient {
     LoginPanelClient lpc = new LoginPanelClient();
     Button homeButton = new Button("Home");
     
+    DesignationDialog dialogBox;
+    DesignationInput desigInputPanel;
+    
+    EmployeeForm leftSidePanel;
+    EmployeeForm editPanel;
+    
+    private DashBoardPanelClient dbp;
+    
+    
     private EmployeeServiceClientAsync empServ;
     private AuthenticationServiceAsync authServ;
    
@@ -77,11 +109,232 @@ public class DashBoardPanelClient {
     private int selectedIndexEmployeeTable =0;
     private Employee add =null;
     
-
+    
     
     @SuppressWarnings("static-access")
 	public void createDashboardPanel() {
     	
+    	dialogBox = new DesignationDialog();
+    	dialogBox.addStyleName("right-dialog-box"); 
+    	
+//    	Image homeButtonImage = new Image("proj/client/Icons/homeiconpng.png");
+//        homeButtonImage.addStyleName("icon-button"); 
+    	
+    	
+    	VerticalPanel navBarPanel = new VerticalPanel();
+        MaterialNavBar navBar = new MaterialNavBar();
+        
+        
+
+
+        
+        navBar.addStyleName("nav-bar"); 
+        
+        MaterialLink spacer1 = new MaterialLink("");
+        MaterialLink spacer2 = new MaterialLink("");
+        MaterialLink spacer3 = new MaterialLink("");
+        MaterialLink spacer4 = new MaterialLink("");
+        
+        spacer1.setWidth("150px"); // Adjust the width for spacing
+        spacer2.setWidth("150px"); // Adjust the width for spacing
+        spacer3.setWidth("150px"); // Adjust the width for spacing
+        spacer4.setWidth("150px"); // Adjust the width for spacing
+        
+        MaterialLink homeLink = new MaterialLink("Home");
+        MaterialLink designationLink = new MaterialLink("Designation");
+        MaterialLink salaryLink = new MaterialLink("Salary");
+        MaterialLink securityLink = new MaterialLink("Security");
+        MaterialLink logoutLink = new MaterialLink("Logout");
+        MaterialLink employeeLink = new MaterialLink("Employee");
+        
+       
+        navBar.add(spacer1);
+        navBar.add(homeLink);
+        
+        navBar.add(spacer2);
+        navBar.add(employeeLink);
+        
+        navBar.add(spacer3);
+        navBar.add(designationLink);
+        
+        navBar.add(spacer3);
+        navBar.add(salaryLink);
+        
+        navBar.add(spacer4);
+        navBar.add(securityLink);
+        
+        navBar.add(spacer1);
+        navBar.add(logoutLink);
+        
+        
+        navBarPanel.add(navBar);
+        
+        homeLink.addClickHandler(new ClickHandler(){
+     			@Override
+     			public void onClick(ClickEvent event) {
+     	        	RootPanel.get().clear();
+
+     	       	RootPanel.get().addStyleName("login-page");
+//     	           
+     	       	LoginView loginView = new LoginView();
+     	       	 // Apply CSS class names to the widgets
+     	           loginView.addStyleName("material-card");
+     	           loginView.getUsernameTextBox().addStyleName("material-textbox");
+     	           loginView.getPasswordTextBox().addStyleName("material-textbox");
+     	           loginView.getLoginButton().addStyleName("material-button");
+     	       	
+     	       	
+     	           //RootPanel.get().add(loginPanel);
+     	           RootPanel.get().add(loginView);
+     			}
+             	
+             });
+        
+
+        designationLink.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				// To show the dialog
+				
+				contentPanel.clear();
+				
+				desigInputPanel = new DesignationInput();
+				desigInputPanel.addStyleName("material-card");
+				desigInputPanel.getDesigname().addStyleName("material-textbox");
+				desigInputPanel.getMaxSalary().addStyleName("material-textbox");
+				desigInputPanel.getMinSalary().addStyleName("material-textbox");
+		
+				
+				contentPanel.add(desigInputPanel);
+				
+	            //dialogBox.center();
+	            //dialogBox.show();
+			}
+        	
+        });
+        
+
+        salaryLink.addClickHandler(new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+//	        	SalaryRecordDialog salaryBox = new SalaryRecordDialog();
+//	        	dialogBox.addStyleName("right-dialog-box");
+//	        	salaryBox.center();
+//	        	salaryBox.show();
+				contentPanel.clear();
+				SalaryRecordDialog srd = new SalaryRecordDialog();
+				srd.addStyleName("material-card");
+				//SalaryPanel salarybox = new SalaryPanel();
+				contentPanel.add(srd);
+			}
+        	
+        });
+       
+        
+        securityLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+//				SecurityTabDialog newSecurityTab = new SecurityTabDialog();
+//				//newSecurityTab.setPixelSize(1000, 500);
+//				newSecurityTab.center();
+//				newSecurityTab.show();
+				RootPanel.get().clear();
+				SecurityPanel sc = new SecurityPanel();
+				sc.createSecurityPanel();
+			}
+        	
+        	
+        	
+        });
+        
+        logoutLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				authServ.LogoutUser(new AsyncCallback<Void>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(caught.toString());
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+					
+						RootPanel.get().clear();
+						RootPanel.get().addStyleName("login-page");
+				    	LoginView loginView = new LoginView();
+				    	 // Apply CSS class names to the widgets
+				        loginView.addStyleName("material-card");
+				        loginView.getUsernameTextBox().addStyleName("material-textbox");
+				        loginView.getPasswordTextBox().addStyleName("material-textbox");
+				        loginView.getLoginButton().addStyleName("material-button");
+				    	
+				    	
+				        //RootPanel.get().add(loginPanel);
+				        RootPanel.get().add(loginView);
+					}
+					
+				});
+				
+			}
+        	
+        });
+        
+        editEmployeeButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				Employee selected = dataProvider.getList().get(selectedIndexEmployeeTable);
+//				EmployeeSignUpPanel empsign = new EmployeeSignUpPanel(selected);
+//				empsign.editableEmployee = selected;
+//				empsign.center();
+//				empsign.show();
+				
+				editPanel = new EmployeeForm(selected);
+				editPanel.addStyleName("material-card");
+				editPanel.getUsernameTextBox().addStyleName("material-textbox");
+			    editPanel.getPasswordTextBox().addStyleName("material-textbox");
+				editPanel.getSalaryTextBox().addStyleName("material-textbox");
+				editPanel.getPasswordTextBox().addStyleName("material-textbox");
+				
+				//editPanel.setVisible(!leftSidePanel.isVisible());
+				//leftSidePanel.getAddButton().addStyleName("material-button");
+				//leftSidePanel.getCancelButton().addStyleName("material-button");
+				//contentPanel.remove(leftSidePanel);
+				contentPanel.add(editPanel);
+			}
+        });
+        
+        
+        addEmployeeButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				leftSidePanel.setVisible(!leftSidePanel.isVisible());
+				
+//				leftSidePanel = new EmployeeForm(add);
+//				leftSidePanel.addStyleName("material-card");
+//				leftSidePanel.getUsernameTextBox().addStyleName("material-textbox");
+//				leftSidePanel.getPasswordTextBox().addStyleName("material-textbox");
+//				leftSidePanel.getSalaryTextBox().addStyleName("material-textbox");
+//				leftSidePanel.getPasswordTextBox().addStyleName("material-textbox");
+				//leftSidePanel.setVisible(true);
+				
+				//leftSidePanel.getAddButton().addStyleName("material-button");
+				//leftSidePanel.getCancelButton().addStyleName("material-button");
+				
+				contentPanel.add(leftSidePanel);
+			}
+        	
+        });
+
+        
+  	
     	empServ = GWT.create(EmployeeServiceClient.class);
     	authServ = GWT.create(AuthenticationService.class);
     	
@@ -134,16 +387,7 @@ public class DashBoardPanelClient {
  
         addClickableHeader(salaryColumn,"Salary");
         
-     // Create and set up edit button column
-//        Column<Employee, String> editButtonColumn = new Column<Employee, String>(new EditButtonCell()) {
-//            @Override
-//            public String getValue(Employee user) {
-//                return "Edit";
-//            }
-//        };
-//        employeeTable.addColumn(editButtonColumn, "Edit");
-        
-        
+
         
         HandlerRegistration selectionHandler = selectionModel.addSelectionChangeHandler(new Handler() {
             @Override
@@ -215,28 +459,31 @@ public class DashBoardPanelClient {
         });
      
         
-        AddEmployeeButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				EmployeeSignUpPanel empsign = new EmployeeSignUpPanel(add);
-				empsign.center();
-				empsign.show();
-			}
-        	
-        });
+//        AddEmployeeButton.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				
+//				//EmployeeSignUpPanel empsign = new EmployeeSignUpPanel(add);
+//				leftSidePanel = new EmployeeForm(add);
+//				contentPanel.add(leftSidePanel);
+//				//empsign.center();
+//				//empsign.show();
+//			}
+//        	
+//        });
 
 
        
-        addSalRecordButton.addClickHandler(new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-	        	SalaryRecordDialog salaryBox = new SalaryRecordDialog();
-	        	salaryBox.center();
-	        	salaryBox.show();
-			}
-        	
-        });
+//        addSalRecordButton.addClickHandler(new ClickHandler(){
+//			@Override
+//			public void onClick(ClickEvent event) {
+//	        	SalaryRecordDialog salaryBox = new SalaryRecordDialog();
+//	        	salaryBox.center();
+//	        	salaryBox.show();
+//			}
+//        	
+//        });
         
         
         homeButton.addClickHandler(new ClickHandler(){
@@ -271,58 +518,58 @@ public class DashBoardPanelClient {
         	
         });
         
-        logoutUserSeeButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				authServ.LogoutUser(new AsyncCallback<Void>(){
-
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert(caught.toString());
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-						Window.alert("user logged out ");
-					}
-					
-				});
-				
-			}
-        	
-        });
+//        logoutUserSeeButton.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				authServ.LogoutUser(new AsyncCallback<Void>(){
+//
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						Window.alert(caught.toString());
+//					}
+//
+//					@Override
+//					public void onSuccess(Void result) {
+//						Window.alert("user logged out ");
+//					}
+//					
+//				});
+//				
+//			}
+//        	
+//        });
         
-        securityButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-//				SecurityTabDialog newSecurityTab = new SecurityTabDialog();
-//				//newSecurityTab.setPixelSize(1000, 500);
-//				newSecurityTab.center();
-//				newSecurityTab.show();
-				RootPanel.get().clear();
-				SecurityPanel sc = new SecurityPanel();
-				sc.createSecurityPanel();
-			}
-        	
-        	
-        	
-        });
-        editEmployeeButton.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				Employee selected = dataProvider.getList().get(selectedIndexEmployeeTable);
-				EmployeeSignUpPanel empsign = new EmployeeSignUpPanel(selected);
-				empsign.editableEmployee = selected;
-				empsign.center();
-				empsign.show();
-			}
-        	
-        	
-        	
-        });
+//        securityButton.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+////				SecurityTabDialog newSecurityTab = new SecurityTabDialog();
+////				//newSecurityTab.setPixelSize(1000, 500);
+////				newSecurityTab.center();
+////				newSecurityTab.show();
+//				RootPanel.get().clear();
+//				SecurityPanel sc = new SecurityPanel();
+//				sc.createSecurityPanel();
+//			}
+//        	
+//        	
+//        	
+//        });
+//        editEmployeeButton.addClickHandler(new ClickHandler() {
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				Employee selected = dataProvider.getList().get(selectedIndexEmployeeTable);
+//				EmployeeSignUpPanel empsign = new EmployeeSignUpPanel(selected);
+//				empsign.editableEmployee = selected;
+//				empsign.center();
+//				empsign.show();
+//			}
+//        	
+//        	
+//        	
+//        });
         
         removeEmployeeButton.addClickHandler(new ClickHandler() {
 
@@ -350,54 +597,49 @@ public class DashBoardPanelClient {
         	
         });
         
+        employeeLink.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+					RootPanel.get().clear();
+					dbp= new DashBoardPanelClient();
+					dbp.createDashboardPanel();
+			}
+        	
+        });
+        
+        leftSidePanel = new EmployeeForm(add);
+		leftSidePanel.addStyleName("material-card");
+		leftSidePanel.getUsernameTextBox().addStyleName("material-textbox");
+		leftSidePanel.getPasswordTextBox().addStyleName("material-textbox");
+		leftSidePanel.getSalaryTextBox().addStyleName("material-textbox");
+		leftSidePanel.getPasswordTextBox().addStyleName("material-textbox");
+        leftSidePanel.setVisible(false);
+
         
         
-        
-      
-        
-        VerticalPanel verticalPanel = new VerticalPanel();
-        
-        verticalPanel.add(homeButton);
-        verticalPanel.add(loginUserCheckButton);
-        
-        
-        verticalPanel.add(openDesignationDialog);
-        
-        
-        verticalPanel.add(AddEmployeeButton);
-        verticalPanel.add(editEmployeeButton);
-        verticalPanel.add(removeEmployeeButton);
-        
-        verticalPanel.add(addSalRecordButton);
-        
-        
-        verticalPanel.add(securityButton);
-        
-        verticalPanel.add(logoutUserSeeButton);
-       
-       // verticalPanel.add(scrollPanel);
-        verticalPanel.setSpacing(15);
-        
-        VerticalPanel secondSide = new VerticalPanel();
-        
-        HorizontalPanel employeeButtonsPanel = new HorizontalPanel();
         employeeButtonsPanel.setSpacing(20);
-        employeeButtonsPanel.add(AddEmployeeButton);
+        employeeButtonsPanel.add(addEmployeeButton);
         employeeButtonsPanel.add(editEmployeeButton);
         employeeButtonsPanel.add(removeEmployeeButton);
         
-        secondSide.add(employeeButtonsPanel);
-        secondSide.add(scrollPanel);
-        secondSide.setSpacing(20);
+       // contentPanel.add(sideNav);
+        contentPanel.add(employeeButtonsPanel);
+        contentPanel.add(scrollPanel);
+        contentPanel.add(leftSidePanel);
         
-        HorizontalPanel hq = new HorizontalPanel();
-        
-        hq.setSpacing(40);
-        hq.add(verticalPanel);
-        //hq.add(scrollPanel);
-        hq.add(secondSide);
+     
+        contentPanel.setSpacing(40);
 
-        RootPanel.get().add(hq);
+
+        
+       
+        wholenew.add(navBarPanel);
+     
+        wholenew.add(contentPanel);
+        
+        RootPanel.get().addStyleName("dashboard-style");
+        RootPanel.get().add(wholenew);
 
         dataProvider.addDataDisplay(employeeTable);
     }

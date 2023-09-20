@@ -19,4 +19,6 @@ public interface FullUserServiceClient extends RemoteService{
 	
 	String updateFullUser(FullUser user);
 	
+	boolean authenticateUserIdMail(String UserId,String email);
+	
 }

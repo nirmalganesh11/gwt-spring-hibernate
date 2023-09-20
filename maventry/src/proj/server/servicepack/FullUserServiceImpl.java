@@ -52,6 +52,11 @@ public class FullUserServiceImpl implements FullUserService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Boolean authenticateWithUserIdMail(String userid,String mail) {
+		return fulluserdao.authenticateWithUserIdMail(userid,mail);	
+	}
 
 	
 	
@@ -72,5 +77,7 @@ public class FullUserServiceImpl implements FullUserService{
 	public void setUserServ(UserService userServ) {
 		this.userServ = userServ;
 	}
+
+	
 	
 }

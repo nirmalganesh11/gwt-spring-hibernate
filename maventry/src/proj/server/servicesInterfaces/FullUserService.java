@@ -12,4 +12,5 @@ public interface FullUserService {
 	public String deleteFullUser(FullUser role);
 	public String updateFullUser(FullUser role);
 	public List<FullUser> getAllFullUsers();
+	public Boolean authenticateWithUserIdMail(String userid,String mail);
 }

@@ -4,10 +4,13 @@
   "https://gwtproject.org/doctype/2.8.0/gwt-module.dtd">
 <module rename-to='maventry'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
+
   <inherits name='com.google.gwt.user.User'/>
 
   <inherits name='com.google.gwt.user.theme.clean.Clean'/>
- 
+   <inherits name="gwt.material.design.GwtMaterialBasicWithJQuery"/>
+
+    <inherits name="gwt.material.design.addins.GWTMaterialAddins"/>
   <entry-point class='proj.client.Maventry'/>
 
   <source path='client'/>

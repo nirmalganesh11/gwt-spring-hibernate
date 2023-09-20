@@ -67,7 +67,7 @@
 		    	<security:intercept-url pattern="/maventry/emp" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/salary" access="IS_AUTHENTICATED_FULLY"/>
 		    	<security:intercept-url pattern="/maventry/role" access="IS_AUTHENTICATED_FULLY"/>
-		    	<security:intercept-url pattern="/maventry/fulluser" access="IS_AUTHENTICATED_FULLY"/>
+		    	<security:intercept-url pattern="/maventry/fulluser" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		    	<security:intercept-url pattern="/maventry/user" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		        <security:intercept-url pattern="/maventry/authenticationService" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		        <security:intercept-url pattern="/maventry/services/**" access="IS_AUTHENTICATED_FULLY"/>

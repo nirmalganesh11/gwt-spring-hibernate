@@ -49,4 +49,9 @@ public class FullUserServiceImplServlet extends RemoteServiceServlet implements 
 		return null;
 	}
 
+	@Override
+	public boolean authenticateUserIdMail(String UserId, String email) {
+		return fullUserServ.authenticateWithUserIdMail(UserId, email);
+	}
+
 }

@@ -124,7 +124,9 @@ public class LoginPanelClient {
 		 	whole.setSpacing(7);
 		 	panel = new VerticalPanel();
 		 	loginButton = new Button("Login");
-		 	signUpLink = new Button("Don't have an account? Nirmal build9 Sign Up!");
+		 	loginButton.addStyleName("animated-button");
+		 	loginButton.addStyleName("animated-button:hover");
+		 	signUpLink = new Button("Don't have an account? Nirmal build10 Sign Up!");
 		 	testcontext = new Button("Test");
 	        
 
@@ -176,6 +178,7 @@ public class LoginPanelClient {
 				}
 	        	
 	        });
+	        
 	        
 	        panel.setSpacing(7);
 	        panel.add(new Label("Username:"));

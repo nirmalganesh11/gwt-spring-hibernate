@@ -1,7 +1,4 @@
-/** Add css rules here for your application. */
 
-
-/** Example rules used by the template application (remove for your app) */
 h1 {
   font-size: 2em;
   font-weight: bold;
@@ -29,7 +26,10 @@ body {
   display: block;
   font-size: 16pt;
 }
-
+.bodytag{
+	
+	
+}
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
   width: 400px;
@@ -37,7 +37,8 @@ body {
 
 
 .rootelement {
-    background-color: black /* Set the desired background color */
+    background-color:green /* Set the desired background color */
+   	
 }
 
 .dialogVPanel {
@@ -52,3 +53,151 @@ body {
 #closeButton {
   margin: 15px 6px 6px;
 }
+.icon-button {
+    cursor: pointer; /* Add pointer cursor to indicate the button is clickable */
+    /* Add other button styling here, e.g., padding, margin, border, etc. */
+}
+
+
+
+/* Style for the login card */
+.material-card {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the form input fields */
+.material-textbox {
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Style for the login button */
+.material-button {
+    width: 90%;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.material-button:hover {
+    background-color: red;
+}
+
+/* styles.css */
+.login-page {
+   
+    background-color:lightyellow;
+    background-image: url('/maventry/src/proj/client/htmlassets/emppic.jpg');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Apply styles to the main content panel */
+.vertical-panel {
+    margin: 20px;
+}
+
+/* Style the MaterialNavBar */
+.nav-bar {
+    background-color: #FFD3D0; /* White background color */
+    border-radius: 5px;
+    padding: 5px 2px; /* Add padding to the navbar */
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+	display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Distribute elements evenly */
+    align-items: center; /* Center items vertically */
+}
+.nav-bar a {
+    color: #333; /* Text color */
+    padding: 10px 20px;
+    text-decoration: none;
+    padding: 10px; /* Adjust padding for spacing */
+}
+
+.nav-bar a:hover {
+    background-color: lightblue; /* Background color on hover */
+}
+/* Style the navigation links in the MaterialSideNav */
+.side-nav {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Text color */
+}
+
+.side-nav a {
+    color: #fff; /* Link text color */
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+.side-nav a:hover {
+    background-color: #444; /* Hover color */
+}
+
+/* Style the dashboard content */
+.dashboard-content {
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the buttons for employee management */
+.employee-button {
+    margin-top: 10px;
+    background-color: #2196F3; /* Material Design blue color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.employee-button:hover {
+    background-color: #1976D2; /* Darker blue on hover */
+}
+.dashboard-style{
+	 background-color: lightgrey; /* Darker blue on hover */
+	
+	
+}
+
+
+
+
+
+
+
+
+.right-dialog-box {
+  position: fixed;
+  top: 70px; /* Adjust this value as needed */
+  right: 250px; /* Adjust this value as needed */
+  /* Additional styling properties */
+}
+
+
+
+
+
+
+
+
+
+
