@@ -8,6 +8,7 @@ import proj.client.newsecurity.DesignationInput;
 import proj.client.newsecurity.EmployeeForm;
 import proj.client.newsecurity.LoginView;
 import proj.client.newsecurity.SalaryPanel;
+import proj.client.newsecurity.WholeDesignationPage;
 import proj.client.servicesClient.*;
 
 
@@ -78,9 +79,9 @@ public class DashBoardPanelClient {
     public ListDataProvider<Employee> dataProvider;
     public DesigClass desigVal;
     
-    Button openDesignationDialog = new Button("Create Designation");
+//    Button openDesignationDialog = new Button("Create Designation");
     Button addEmployeeButton = new Button("Add Employee");
-    Button addSalRecordButton = new Button("Add Salary Record");
+//    Button addSalRecordButton = new Button("Add Salary Record");
     Button editEmployeeButton = new Button("Edit Employee");
     Button removeEmployeeButton = new Button("Remove Employee");
     
@@ -92,7 +93,7 @@ public class DashBoardPanelClient {
     LoginPanelClient lpc = new LoginPanelClient();
     Button homeButton = new Button("Home");
     
-    DesignationDialog dialogBox;
+    //DesignationDialog dialogBox;
     DesignationInput desigInputPanel;
     
     EmployeeForm leftSidePanel;
@@ -114,8 +115,8 @@ public class DashBoardPanelClient {
     @SuppressWarnings("static-access")
 	public void createDashboardPanel() {
     	
-    	dialogBox = new DesignationDialog();
-    	dialogBox.addStyleName("right-dialog-box"); 
+    	//dialogBox = new DesignationDialog();
+    	//dialogBox.addStyleName("right-dialog-box"); 
     	
 //    	Image homeButtonImage = new Image("proj/client/Icons/homeiconpng.png");
 //        homeButtonImage.addStyleName("icon-button"); 
@@ -197,18 +198,25 @@ public class DashBoardPanelClient {
 			public void onClick(ClickEvent event) {
 				
 				// To show the dialog
+				RootPanel.get().clear();
+				WholeDesignationPage newpage = new WholeDesignationPage();
+				newpage.createDesignationPage();
 				
-				contentPanel.clear();
 				
-				desigInputPanel = new DesignationInput();
-				desigInputPanel.addStyleName("material-card");
-				desigInputPanel.getDesigname().addStyleName("material-textbox");
-				desigInputPanel.getMaxSalary().addStyleName("material-textbox");
-				desigInputPanel.getMinSalary().addStyleName("material-textbox");
-		
 				
-				contentPanel.add(desigInputPanel);
 				
+				
+//				contentPanel.clear();
+//				
+//				desigInputPanel = new DesignationInput();
+//				desigInputPanel.addStyleName("material-card");
+//				desigInputPanel.getDesigname().addStyleName("material-textbox");
+//				desigInputPanel.getMaxSalary().addStyleName("material-textbox");
+//				desigInputPanel.getMinSalary().addStyleName("material-textbox");
+//				
+//				
+//				contentPanel.add(desigInputPanel);
+//				
 	            //dialogBox.center();
 	            //dialogBox.show();
 			}
@@ -447,16 +455,16 @@ public class DashBoardPanelClient {
              });
            
         
-        openDesignationDialog.addClickHandler(new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				DesignationDialog dialogBox = new DesignationDialog();
-	            dialogBox.center();
-	            dialogBox.show();
-			}
-        	
-        });
+//        openDesignationDialog.addClickHandler(new ClickHandler(){
+//
+//			@Override
+//			public void onClick(ClickEvent event) {
+//				//DesignationDialog dialogBox = new DesignationDialog();
+//	            //dialogBox.center();
+//	            //dialogBox.show();
+//			}
+//        	
+//        });
      
         
 //        AddEmployeeButton.addClickHandler(new ClickHandler() {
@@ -486,14 +494,14 @@ public class DashBoardPanelClient {
 //        });
         
         
-        homeButton.addClickHandler(new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-	        	RootPanel.get().clear();
-	        	RootPanel.get().add(lpc.createLoginPanel());
-			}
-        	
-        });
+//        homeButton.addClickHandler(new ClickHandler(){
+//			@Override
+//			public void onClick(ClickEvent event) {
+//	        	RootPanel.get().clear();
+//	        	RootPanel.get().add(lpc.createLoginPanel());
+//			}
+//        	
+//        });
         
 
    

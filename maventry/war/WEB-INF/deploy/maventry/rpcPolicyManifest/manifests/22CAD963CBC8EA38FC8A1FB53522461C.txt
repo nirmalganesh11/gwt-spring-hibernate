@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.UserServiceClient
+path: 5CDB5DC54D75B816B1B83D31771279AF.gwt.rpc

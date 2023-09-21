@@ -91,6 +91,12 @@ public class DesigServiceImpl implements DesigService {
 		}
 		return true;
 	}
+
+
+	@Override
+	public List<DesigClass> listDesignations() {
+		return desigdao.listDesigantions();
+	}
 	
 	
 }

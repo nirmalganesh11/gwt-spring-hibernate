@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.RoleServiceClient
+path: DE6D151F81A5F32792ED4533188AC695.gwt.rpc

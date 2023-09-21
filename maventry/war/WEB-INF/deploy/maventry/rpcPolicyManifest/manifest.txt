@@ -1,2 +1,9 @@
 # Module maventry
 # RPC service class, partial path of RPC policy file
+proj.client.servicesClient.AuthenticationService, DFB51AF73F46C8C2F0CA3F1E0C85F16E.gwt.rpc
+proj.client.servicesClient.UserServiceClient, 5CDB5DC54D75B816B1B83D31771279AF.gwt.rpc
+proj.client.servicesClient.FullUserServiceClient, FB17927C00ACA63DE9331A37B3A210BE.gwt.rpc
+proj.client.servicesClient.SalaryClassServiceClient, B840E14EE833E02C8B20225C4AFEF776.gwt.rpc
+proj.client.servicesClient.EmployeeServiceClient, 1BC590AEAFCEDEC623DA0A0E69C007BA.gwt.rpc
+proj.client.servicesClient.RoleServiceClient, DE6D151F81A5F32792ED4533188AC695.gwt.rpc
+proj.client.servicesClient.DesigServiceClient, 0F26C9A0AA00D6E1D363B1E4921EAB8A.gwt.rpc

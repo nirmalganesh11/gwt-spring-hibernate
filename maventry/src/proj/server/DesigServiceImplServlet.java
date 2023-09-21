@@ -40,4 +40,9 @@ public class DesigServiceImplServlet extends RemoteServiceServlet implements Des
 
 	}
 
+	@Override
+	public List<DesigClass> getDesignationsList() {
+		return desigserv.listDesignations();
+	}
+
 }

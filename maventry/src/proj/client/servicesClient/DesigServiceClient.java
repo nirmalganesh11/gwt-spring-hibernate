@@ -12,4 +12,6 @@ public interface DesigServiceClient extends RemoteService {
 	String addDesignation(DesigClass desigVal);
 	List<String> getDesignations();
 	DesigClass getDesignation(String designame);
+	
+	List<DesigClass> getDesignationsList();
 }

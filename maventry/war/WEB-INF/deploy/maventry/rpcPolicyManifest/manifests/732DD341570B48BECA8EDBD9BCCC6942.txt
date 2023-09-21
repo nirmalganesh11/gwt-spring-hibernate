@@ -1,0 +1,2 @@
+serviceClass: proj.client.servicesClient.FullUserServiceClient
+path: FB17927C00ACA63DE9331A37B3A210BE.gwt.rpc

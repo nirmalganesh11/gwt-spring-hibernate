@@ -13,4 +13,6 @@ public interface DesigService {
 
 	DesigClass getDesignation(String designame);
 	
+	List<DesigClass> listDesignations();
+	
 }
